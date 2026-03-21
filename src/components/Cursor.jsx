@@ -34,11 +34,9 @@ export default function Cursor() {
     const wrap = wrapRef.current
     if (!wrap) return
 
-    // Hide system cursor
-    const tag = document.createElement('style')
-    tag.id = 'rb-no-cursor'
-    tag.textContent = '*, *::before, *::after { cursor: none !important; }'
-    document.head.appendChild(tag)
+    // Ensure system cursor is hidden via inline root styles (avoid duplicate style tags)
+    document.documentElement.style.cursor = 'none'
+    document.body.style.cursor = 'none'
 
     let tx = -500, ty = -500
     let cx = -500, cy = -500
@@ -158,7 +156,7 @@ export default function Cursor() {
       document.removeEventListener('pointerenter', onEnter)
       document.removeEventListener('pointerover',  onPointerOver)
       document.removeEventListener('pointerout',   onPointerOut)
-      document.getElementById('rb-no-cursor')?.remove()
+      document.documentElement.style.cursor = ''
       document.body.style.cursor = ''
     }
   }, [])

@@ -87,6 +87,8 @@
   }
 
   /* Ensure custom cursor overrides all elements (fix for production/Vercel) */
+  html,
+  body,
   *,
   *::before,
   *::after {
