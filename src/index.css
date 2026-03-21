@@ -86,6 +86,13 @@
     cursor: none;
   }
 
+  /* Ensure custom cursor overrides all elements (fix for production/Vercel) */
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+
   /* Vite root div — no extra spacing */
   #root {
     margin: 0;
