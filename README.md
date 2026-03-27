@@ -26,7 +26,7 @@
 
 ### Interactions & UX
 - **WebGL Shader Intro** — Three.js GLSL fragment shader splash screen on first visit, with smart hybrid session/localStorage gating (shows once per 6-hour session, skippable)
-- **3-State Custom Cursor** — macOS-accurate SVG cursor system with `arrow`, `hand`, and `i-beam` states; detects element type per animation frame via `elementFromPoint`; theme-aware; fully disabled on touch devices
+- **0-Latency Custom Cursor** — macOS-accurate SVG cursor system with `arrow`, `hand`, and `i-beam` states; utilizes 1:1 hardware-speed LERP tracking for native responsiveness; detects element type per animation frame via `elementFromPoint`; theme-aware; fully disabled on touch devices
 - **Scroll Progress Bar** — Thin emerald accent bar tracking read progress at the top of the viewport
 - **IntersectionObserver Navigation** — Active section highlighting uses visibility-ratio comparison (not `scrollY` offsets), so the navbar always reflects what's actually on screen
 
@@ -40,6 +40,7 @@
 - **Hero** — Staggered mount animation, `rithwik.config.ts` syntax-highlighted code card with 6-color token system, floating CGPA + Projects stat cards, "View Work" and "Resume" CTAs
 - **About** — Profile photo with 3D spring tilt on hover (`rotateY + rotateX`), bio, skill highlights, resume download; graceful `RB` initials fallback if image is missing
 - **Experience** — Animated vertical timeline with active-status pulse indicator
+- **Global Experience** — Interactive dual-card layout replicating native LinkedIn post architecture for professional credibility. Features a hardware-accelerated "Cinematic Slideshow" with dynamic Light/Dark mode vignette overlays, auto-scaling typography, and expandable text constraints.
 - **Projects** — Featured cards (image-dominant 50/50 layout, hover overlay with action buttons) + responsive grid cards; desktop hover overlay, mobile static buttons — no scroll-triggered flicker
 - **Skills** — 7-category interactive glass cards (Programming, Frontend, Backend, Databases, AI/ML, Core CS, Tools)
 - **Education** — Vertical timeline with period badges, subject chips, grade pills, and location pins
@@ -48,6 +49,8 @@
 
 ### Performance
 - All cursor/scroll animation via `requestAnimationFrame` + `translate3d` — GPU compositor lane only
+- Zero-latency hardware-synced LERP tracking ensures the custom mouse pointer never lags behind physical hardware
+- Expensive `backdrop-filter` matrix convolutions strictly removed from `framer-motion` animation layers to guarantee 60fps transitions
 - `IntersectionObserver` for all scroll-triggered animations — zero passive scroll listeners on elements
 - Images lazy-loaded with `loading="lazy"`
 - Three.js loaded dynamically from CDN only when the intro plays — zero bundle weight at runtime
@@ -115,6 +118,7 @@ rithwik-portfolio/
 │   │   ├── Hero.jsx             # Code card, animated title, stats, CTAs
 │   │   ├── About.jsx            # Profile photo, bio, 3D tilt hover
 │   │   ├── Experience.jsx       # Animated vertical timeline
+│   │   ├── GlobalExperience.jsx # Cinematic slideshow, native LinkedIn card replication
 │   │   ├── Projects.jsx         # Featured cards + grid cards + GitHub CTA
 │   │   ├── Skills.jsx           # Categorised interactive glass cards
 │   │   ├── Education.jsx        # Timeline + certifications panel
