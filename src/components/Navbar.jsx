@@ -38,6 +38,7 @@ const MoonIcon = () => (
 const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Global', href: '#global' },
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
   { label: 'Contact', href: '#contact' },
@@ -81,7 +82,7 @@ export default function Navbar() {
     // Fires only when a section is ≥ 45% visible in the viewport.
     // Using a Map so the latest entry event wins cleanly when two
     // sections briefly overlap the threshold at the same time.
-    const SECTIONS = ['about', 'experience', 'projects', 'skills', 'contact']
+    const SECTIONS = ['about', 'experience', 'global', 'projects', 'skills', 'contact']
     const visible  = new Map()   // id → intersectionRatio
 
     const observer = new IntersectionObserver(

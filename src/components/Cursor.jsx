@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 // Selectors for each cursor state — unchanged from original
-const HAND_SEL  = 'a, button, [role="button"], [role="link"], summary, label[for]'
+const HAND_SEL = 'a, button, [role="button"], [role="link"], summary, label[for]'
 const IBEAM_SEL = 'input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]), textarea, [contenteditable="true"], [contenteditable=""]'
 
 function closestMatch(el, selector) {
@@ -12,20 +12,20 @@ function getState(x, y) {
   const el = document.elementFromPoint(x, y)
   if (!el) return 'arrow'
   if (closestMatch(el, IBEAM_SEL)) return 'ibeam'
-  if (closestMatch(el, HAND_SEL))  return 'hand'
+  if (closestMatch(el, HAND_SEL)) return 'hand'
   return 'arrow'
 }
 
 export default function Cursor() {
-  const wrapRef         = useRef(null)
-  const svgArrowRef     = useRef(null)
-  const svgHandRef      = useRef(null)
-  const svgIbeamRef     = useRef(null)
-  const arrowFillRef    = useRef(null)
-  const arrowStrokeRef  = useRef(null)
-  const handFillRef     = useRef(null)
-  const handStrokeRef   = useRef(null)
-  const ibeamGroupRef   = useRef(null)
+  const wrapRef = useRef(null)
+  const svgArrowRef = useRef(null)
+  const svgHandRef = useRef(null)
+  const svgIbeamRef = useRef(null)
+  const arrowFillRef = useRef(null)
+  const arrowStrokeRef = useRef(null)
+  const handFillRef = useRef(null)
+  const handStrokeRef = useRef(null)
+  const ibeamGroupRef = useRef(null)
 
   useEffect(() => {
     // Disable on touch devices
@@ -40,29 +40,29 @@ export default function Cursor() {
 
     let tx = -500, ty = -500
     let cx = -500, cy = -500
-    let visible   = false
+    let visible = false
     let lastState = ''
     let lastIsDark = !document.documentElement.classList.contains('light-mode')
     let isHovering = false    // tracks hover state for scale effect
     let currentScale = 1      // lerped scale
-    let targetScale  = 1
+    let targetScale = 1
     let rafId = 0
 
-    // ── IMPROVED: two-speed lerp
-    // Fast for the dot (LERP_FAST), slower for scale easing
-    const LERP_FAST  = 0.82   // slightly faster than original 0.72 for snappiness
-    const LERP_SCALE = 0.14   // smooth scale in/out
+    // ── IMPROVED: Native tracking speed
+    // 1.0 for the dot exactly matches hardware mouse speed, slower for scale easing
+    const LERP_FAST = 1.5    // Completely native tracking (0 delay)
+    const LERP_SCALE = 0.3   // Accelerated smooth scale
 
     const applyColors = (isDark) => {
-      const fill   = isDark ? 'rgba(255,255,255,0.97)' : 'rgba(10,10,16,0.92)'
-      const stroke = isDark ? 'rgba(0,0,0,0.30)'       : 'rgba(255,255,255,0.55)'
-      const ibeam  = isDark ? 'rgba(255,255,255,0.90)' : 'rgba(10,10,16,0.82)'
+      const fill = isDark ? 'rgba(255,255,255,0.97)' : 'rgba(10,10,16,0.92)'
+      const stroke = isDark ? 'rgba(0,0,0,0.30)' : 'rgba(255,255,255,0.55)'
+      const ibeam = isDark ? 'rgba(255,255,255,0.90)' : 'rgba(10,10,16,0.82)'
 
-      arrowFillRef.current?.setAttribute('fill',   fill)
+      arrowFillRef.current?.setAttribute('fill', fill)
       arrowStrokeRef.current?.setAttribute('stroke', stroke)
-      handFillRef.current?.setAttribute('fill',    fill)
+      handFillRef.current?.setAttribute('fill', fill)
       handStrokeRef.current?.setAttribute('stroke', stroke)
-      ibeamGroupRef.current?.setAttribute('fill',  ibeam)
+      ibeamGroupRef.current?.setAttribute('fill', ibeam)
     }
 
     const applyState = (state) => {
@@ -70,14 +70,14 @@ export default function Cursor() {
       lastState = state
 
       if (svgArrowRef.current) svgArrowRef.current.style.display = state === 'arrow' ? 'block' : 'none'
-      if (svgHandRef.current)  svgHandRef.current.style.display  = state === 'hand'  ? 'block' : 'none'
+      if (svgHandRef.current) svgHandRef.current.style.display = state === 'hand' ? 'block' : 'none'
       if (svgIbeamRef.current) svgIbeamRef.current.style.display = state === 'ibeam' ? 'block' : 'none'
 
       const origins = { arrow: '3px 2px', hand: '7px 1px', ibeam: '5px 11px' }
       wrap.style.transformOrigin = origins[state]
 
       // Scale target: subtle enlarge on hand (interactive elements), shrink on ibeam
-      if (state === 'hand')  targetScale = 1.18
+      if (state === 'hand') targetScale = 1.18
       else if (state === 'ibeam') targetScale = 0.88
       else targetScale = 1
     }
@@ -110,11 +110,11 @@ export default function Cursor() {
       }
     }
 
-    document.addEventListener('pointermove',  onPointerMove, { passive: true })
+    document.addEventListener('pointermove', onPointerMove, { passive: true })
     document.addEventListener('pointerleave', onLeave)
     document.addEventListener('pointerenter', onEnter)
-    document.addEventListener('pointerover',  onPointerOver, { passive: true })
-    document.addEventListener('pointerout',   onPointerOut,  { passive: true })
+    document.addEventListener('pointerover', onPointerOver, { passive: true })
+    document.addEventListener('pointerout', onPointerOut, { passive: true })
 
     // ── RAF loop
     const tick = () => {
@@ -151,11 +151,11 @@ export default function Cursor() {
 
     return () => {
       cancelAnimationFrame(rafId)
-      document.removeEventListener('pointermove',  onPointerMove)
+      document.removeEventListener('pointermove', onPointerMove)
       document.removeEventListener('pointerleave', onLeave)
       document.removeEventListener('pointerenter', onEnter)
-      document.removeEventListener('pointerover',  onPointerOver)
-      document.removeEventListener('pointerout',   onPointerOut)
+      document.removeEventListener('pointerover', onPointerOver)
+      document.removeEventListener('pointerout', onPointerOut)
       document.documentElement.style.cursor = ''
       document.body.style.cursor = ''
     }
@@ -166,14 +166,14 @@ export default function Cursor() {
       ref={wrapRef}
       aria-hidden="true"
       style={{
-        position:        'fixed',
-        top:             0,
-        left:            0,
-        pointerEvents:   'none',
-        zIndex:          999999,
-        opacity:         0,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        zIndex: 999999,
+        opacity: 0,
         transformOrigin: '3px 2px',
-        willChange:      'transform',
+        willChange: 'transform',
       }}
     >
       {/* Shared filter — always rendered so url(#rb-sh) resolves even when cursors swap */}
@@ -259,9 +259,9 @@ export default function Cursor() {
         style={{ display: 'none', overflow: 'visible', position: 'absolute', top: 0, left: 0 }}
       >
         <g ref={ibeamGroupRef} fill="rgba(255,255,255,0.90)" filter="url(#rb-sh)">
-          <rect x="1"   y="1"    width="9"   height="1.8" rx="0.9" />
-          <rect x="4.6" y="2.2"  width="1.8" height="17.6" rx="0.9" />
-          <rect x="1"   y="19.2" width="9"   height="1.8" rx="0.9" />
+          <rect x="1" y="1" width="9" height="1.8" rx="0.9" />
+          <rect x="4.6" y="2.2" width="1.8" height="17.6" rx="0.9" />
+          <rect x="1" y="19.2" width="9" height="1.8" rx="0.9" />
         </g>
       </svg>
     </div>
