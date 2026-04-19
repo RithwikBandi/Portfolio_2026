@@ -27,7 +27,7 @@ export const projects = [
     impact: 'Full-stack job management platform with enterprise-grade access control',
     tech: ['Node.js', 'MongoDB', 'React', 'Express', 'JWT', 'RBAC'],
     github: 'https://github.com/RithwikBandi/JobSpace',
-    live: null,
+    live: 'https://job-space-deployment.vercel.app',
     color: '#6ee7b7',
     featured: true,
     number: '01',

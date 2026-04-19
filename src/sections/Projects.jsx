@@ -87,7 +87,7 @@ function FeaturedCard({ project, index }) {
                 whileTap={{ scale: 0.97 }}
               >
                 <ExternalIcon />
-                Live Demo
+                View Project
               </motion.a>
             )}
             <motion.a
@@ -126,7 +126,8 @@ function ProjectVisual({ project }) {
   // Desktop-only: overlay shows on genuine pointer hover.
   // Touch devices never set hovered (no onMouseEnter bound) and
   // never show the overlay — static buttons render below the image instead.
-  const showOverlay = !isTouch && hovered
+  // Only show overlay if there is a live link.
+  const showOverlay = !isTouch && hovered && project.live
 
   return (
     <div
@@ -208,11 +209,11 @@ function ProjectVisual({ project }) {
         <div
           className="absolute inset-0 flex items-center justify-center gap-3"
           style={{
-            background:    'rgba(0,0,0,0.62)',
+            background: 'rgba(0,0,0,0.62)',
             backdropFilter: 'blur(6px)',
-            opacity:        showOverlay ? 1 : 0,
-            transition:     'opacity 0.25s ease',
-            pointerEvents:  showOverlay ? 'auto' : 'none',
+            opacity: showOverlay ? 1 : 0,
+            transition: 'opacity 0.25s ease',
+            pointerEvents: showOverlay ? 'auto' : 'none',
           }}
         >
           {project.live && (
@@ -222,18 +223,18 @@ function ProjectVisual({ project }) {
               rel="noopener noreferrer"
               className="cursor-none"
               style={{
-                display:        'inline-flex',
-                alignItems:     'center',
-                gap:            '6px',
-                background:     'var(--accent)',
-                color:          '#080a0f',
-                fontFamily:     "'Syne', sans-serif",
-                fontWeight:     600,
-                fontSize:       '13px',
-                padding:        '9px 20px',
-                borderRadius:   '6px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: 'var(--accent)',
+                color: '#080a0f',
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 600,
+                fontSize: '13px',
+                padding: '9px 20px',
+                borderRadius: '6px',
                 textDecoration: 'none',
-                transition:     'opacity 0.2s',
+                transition: 'opacity 0.2s',
               }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
@@ -242,38 +243,6 @@ function ProjectVisual({ project }) {
               View Project
             </a>
           )}
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cursor-none"
-            style={{
-              display:        'inline-flex',
-              alignItems:     'center',
-              gap:            '6px',
-              background:     'rgba(255,255,255,0.10)',
-              color:          '#f8fafc',
-              fontFamily:     "'Syne', sans-serif",
-              fontWeight:     500,
-              fontSize:       '13px',
-              padding:        '9px 20px',
-              borderRadius:   '6px',
-              border:         '1px solid rgba(255,255,255,0.20)',
-              textDecoration: 'none',
-              transition:     'background 0.2s, border-color 0.2s',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background  = 'rgba(255,255,255,0.18)'
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.32)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background  = 'rgba(255,255,255,0.10)'
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-            }}
-          >
-            <GithubIcon />
-            Source Code
-          </a>
         </div>
       )}
     </div>
@@ -284,6 +253,7 @@ function ProjectVisual({ project }) {
 function ProjectCard({ project, index }) {
   const [ref, inView] = useInView()
   const [hovered, setHovered] = useState(false)
+  const [imgHovered, setImgHovered] = useState(false)
   const [isTouch, setIsTouch] = useState(false)
   const [imgError, setImgError] = useState(false)
 
@@ -293,7 +263,8 @@ function ProjectCard({ project, index }) {
 
   // showOverlay is desktop-only: never driven by isTouch.
   // Touch devices use the static button row at the bottom of the card instead.
-  const showOverlay = !isTouch && hovered
+  // Only show overlay if there is a live link.
+  const showOverlay = !isTouch && imgHovered && project.live
 
   return (
     <motion.article
@@ -308,8 +279,8 @@ function ProjectCard({ project, index }) {
       className="group glass rounded-2xl border border-[var(--border)] flex flex-col relative overflow-hidden"
       style={{
         // Scale/shadow only on desktop hover — no transform on touch
-        transform:  (!isTouch && hovered) ? 'translateY(-3px) scale(1.03)' : 'translateY(0) scale(1)',
-        boxShadow:  (!isTouch && hovered)
+        transform: (!isTouch && hovered) ? 'translateY(-3px) scale(1.03)' : 'translateY(0) scale(1)',
+        boxShadow: (!isTouch && hovered)
           ? `0 20px 60px rgba(0,0,0,0.45), 0 0 0 1px ${project.color}22, 0 0 40px ${project.color}10`
           : '0 4px 24px rgba(0,0,0,0.2)',
         transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease',
@@ -319,6 +290,8 @@ function ProjectCard({ project, index }) {
       <div
         className="relative w-full overflow-hidden"
         style={{ aspectRatio: '3/2', background: 'var(--bg-secondary)' }}
+        onMouseEnter={!isTouch ? () => setImgHovered(true) : undefined}
+        onMouseLeave={!isTouch ? () => setImgHovered(false) : undefined}
       >
         {/* Screenshot — tries /assets/projects/project-NN.png first */}
         {!imgError ? (
@@ -361,78 +334,45 @@ function ProjectCard({ project, index }) {
 
         {/* Desktop-only hover overlay — completely absent from DOM on touch */}
         {!isTouch && (
-        <div
-          className="absolute inset-0 flex items-center justify-center gap-3"
-          style={{
-            background:     'rgba(0,0,0,0.62)',
-            backdropFilter: 'blur(6px)',
-            opacity:        showOverlay ? 1 : 0,
-            transition:     'opacity 0.25s ease',
-            pointerEvents:  showOverlay ? 'auto' : 'none',
-          }}
-        >
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cursor-none"
-              style={{
-                display:        'inline-flex',
-                alignItems:     'center',
-                gap:            '6px',
-                background:     'var(--accent)',
-                color:          '#080a0f',
-                fontFamily:     "'Syne', sans-serif",
-                fontWeight:     600,
-                fontSize:       '12px',
-                letterSpacing:  '0.02em',
-                padding:        '8px 16px',
-                borderRadius:   '6px',
-                textDecoration: 'none',
-                transition:     'opacity 0.2s',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-            >
-              <ExternalIcon />
-              View Project
-            </a>
-          )}
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cursor-none"
+          <div
+            className="absolute inset-0 flex items-center justify-center gap-3"
             style={{
-              display:        'inline-flex',
-              alignItems:     'center',
-              gap:            '6px',
-              background:     'rgba(255,255,255,0.10)',
-              color:          '#f8fafc',
-              fontFamily:     "'Syne', sans-serif",
-              fontWeight:     500,
-              fontSize:       '12px',
-              letterSpacing:  '0.02em',
-              padding:        '8px 16px',
-              borderRadius:   '6px',
-              border:         '1px solid rgba(255,255,255,0.18)',
-              textDecoration: 'none',
-              transition:     'background 0.2s, border-color 0.2s',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background   = 'rgba(255,255,255,0.18)'
-              e.currentTarget.style.borderColor  = 'rgba(255,255,255,0.3)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background   = 'rgba(255,255,255,0.10)'
-              e.currentTarget.style.borderColor  = 'rgba(255,255,255,0.18)'
+              background: 'rgba(0,0,0,0.62)',
+              backdropFilter: 'blur(6px)',
+              opacity: showOverlay ? 1 : 0,
+              transition: 'opacity 0.25s ease',
+              pointerEvents: showOverlay ? 'auto' : 'none',
             }}
           >
-            <GithubIcon />
-            Source Code
-          </a>
-        </div>
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-none"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'var(--accent)',
+                  color: '#080a0f',
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 600,
+                  fontSize: '12px',
+                  letterSpacing: '0.02em',
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  textDecoration: 'none',
+                  transition: 'opacity 0.2s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                <ExternalIcon />
+                View Project
+              </a>
+            )}
+          </div>
         )}
 
         {/* Top accent line */}
@@ -472,8 +412,8 @@ function ProjectCard({ project, index }) {
           className="text-xs font-body px-3 py-2 rounded-lg mb-4 leading-snug"
           style={{
             background: `${project.color}08`,
-            color:      project.color,
-            border:     `1px solid ${project.color}18`,
+            color: project.color,
+            border: `1px solid ${project.color}18`,
           }}
         >
           {project.impact}
@@ -489,32 +429,33 @@ function ProjectCard({ project, index }) {
           )}
         </div>
 
-        {/* Fallback link row — only on touch (desktop uses overlay) */}
-        {isTouch && (
-          <div className="flex gap-3 mt-4 pt-4 border-t border-[var(--border)]">
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs font-body text-[var(--text-secondary)] transition-colors duration-200"
-                style={{ color: project.color }}
-              >
-                <ExternalIcon />
-                Live Demo
-              </a>
-            )}
-            <a
-              href={project.github}
+        {/* Action Buttons (Always visible) */}
+        <div className="flex gap-3 mt-4 pt-4 border-t border-[var(--border)]">
+          {project.live && (
+            <motion.a
+              href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-body text-[var(--text-secondary)] transition-colors duration-200 ml-auto"
+              className="btn-primary text-xs py-2 px-4 cursor-none flex items-center justify-center gap-1.5 flex-1"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <GithubIcon />
-              Source
-            </a>
-          </div>
-        )}
+              <ExternalIcon />
+              View Project
+            </motion.a>
+          )}
+          <motion.a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary text-xs py-2 px-4 cursor-none flex items-center justify-center gap-1.5 flex-1"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <GithubIcon />
+            Source
+          </motion.a>
+        </div>
       </div>
     </motion.article>
   )
