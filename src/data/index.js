@@ -120,7 +120,7 @@ export const skills = [
   {
     category: 'Tools',
     icon: '🛠️',
-    items: ['Git & GitHub', 'VS Code', 'Google Colab', 'Vercel', 'Render'],
+    items: ['Git & GitHub', 'AWS', 'VS Code', 'Google Colab', 'Vercel', 'Render'],
   },
 ]
 
@@ -187,6 +187,15 @@ export const education = [
 ]
 
 export const certifications = [
+  {
+    title: 'AWS Academy Cloud Foundations',
+    issuer: 'Amazon Web Services (AWS)',
+    subtitle: 'AWS Academy Graduate',
+    description: 'Validates overall understanding of the AWS Cloud, covering basic cloud concepts, security, architecture, pricing, and support.',
+    skills: ['Cloud Computing', 'AWS Services', 'Cloud Security', 'Billing and Pricing'],
+    pdf: '/assets/certificates/AWS_Academy_Graduate_Cloud_Foundations_Training_Badge_Badge.pdf',
+    badge: '/assets/certificates/aws-academy-graduate-cloud-foundations-training-bad.png',
+  },
   {
     title: 'Microsoft Azure AI-900',
     issuer: 'Microsoft',
