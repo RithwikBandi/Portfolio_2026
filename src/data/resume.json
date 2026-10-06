@@ -1,0 +1,347 @@
+{
+  "source": "Rithwik_Resume.pdf",
+  "hash": "03991c3a30",
+  "pageCount": 1,
+  "name": "Rithwik Bandi",
+  "contacts": [
+    {
+      "label": "+91 9347452660",
+      "href": "tel:+919347452660",
+      "kind": "phone"
+    },
+    {
+      "label": "rithwikbandi.56@gmail.com",
+      "href": "mailto:rithwikbandi.56@gmail.com",
+      "kind": "email"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/RithwikBandi",
+      "kind": "github"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/rithwik-bandi/",
+      "kind": "linkedin"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Summary",
+      "paragraphs": [
+        [
+          {
+            "t": "Full Stack & AI Engineer specializing in "
+          },
+          {
+            "t": "scalable backend systems, RESTful APIs, and machine learning pipelines",
+            "b": true
+          },
+          {
+            "t": ". Experienced in building "
+          },
+          {
+            "t": "end-to-end applications",
+            "b": true
+          },
+          {
+            "t": " and real-time data processing solutions, with a strong focus on performance, security, and reliability."
+          }
+        ]
+      ],
+      "entries": []
+    },
+    {
+      "title": "Education",
+      "paragraphs": [],
+      "entries": [
+        {
+          "title": "S R University, Warangal",
+          "meta": "May 2027",
+          "metaHref": null,
+          "subtitle": "B.Tech in Computer Science and Engineering",
+          "meta2": "CGPA: 8.8/10",
+          "bullets": []
+        }
+      ]
+    },
+    {
+      "title": "Experience",
+      "paragraphs": [],
+      "entries": [
+        {
+          "title": "Full Stack & AI Developer – Heart Risk Prediction System",
+          "meta": "2025 – Present",
+          "metaHref": null,
+          "subtitle": null,
+          "meta2": null,
+          "bullets": [
+            [
+              {
+                "t": "Architected a "
+              },
+              {
+                "t": "full-stack AI healthcare system",
+                "b": true
+              },
+              {
+                "t": " using FastAPI, React, and MongoDB for real-time cardiovascular risk prediction with secure authentication and scalable backend architecture."
+              }
+            ],
+            [
+              {
+                "t": "Designed a "
+              },
+              {
+                "t": "machine learning pipeline",
+                "b": true
+              },
+              {
+                "t": " with feature engineering, preprocessing, and SHAP-based explainability to deliver accurate and interpretable predictions."
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Full Stack Developer – JobSpace AI",
+          "meta": "2026 – Present",
+          "metaHref": null,
+          "subtitle": null,
+          "meta2": null,
+          "bullets": [
+            [
+              {
+                "t": "Built a "
+              },
+              {
+                "t": "job application tracking platform",
+                "b": true
+              },
+              {
+                "t": " with RBAC, session-based authentication, and RESTful APIs using Node.js and MongoDB for structured workflow management."
+              }
+            ],
+            [
+              {
+                "t": "Designed "
+              },
+              {
+                "t": "analytics dashboards",
+                "b": true
+              },
+              {
+                "t": " with MongoDB aggregations to track application trends, response rates, and support data-driven decision-making."
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Projects",
+      "paragraphs": [],
+      "entries": [
+        {
+          "title": "Automated Timetable Analyzer",
+          "meta": "GitHub",
+          "metaHref": "https://github.com/RickyBandi/SRU-TIME-TABLE",
+          "subtitle": null,
+          "meta2": null,
+          "bullets": [
+            [
+              {
+                "t": "Built a "
+              },
+              {
+                "t": "data processing pipeline",
+                "b": true
+              },
+              {
+                "t": " to transform unstructured Excel timetables into structured schedules using FastAPI and React, including parsing, normalization, and data extraction."
+              }
+            ],
+            [
+              {
+                "t": "Developed "
+              },
+              {
+                "t": "scheduling algorithms",
+                "b": true
+              },
+              {
+                "t": " to identify individual and common free time slots across users, and deployed the system via Vercel and Render for real-time usage."
+              }
+            ]
+          ]
+        },
+        {
+          "title": "MarvelShowCase – MCU Explorer",
+          "meta": "Live",
+          "metaHref": "https://marvel-show-case.vercel.app/",
+          "subtitle": null,
+          "meta2": null,
+          "bullets": [
+            [
+              {
+                "t": "Developed a "
+              },
+              {
+                "t": "production-grade React (TypeScript) application",
+                "b": true
+              },
+              {
+                "t": " with modular architecture, Context API state management, and optimized UI performance."
+              }
+            ],
+            [
+              {
+                "t": "Implemented "
+              },
+              {
+                "t": "CI/CD deployment, responsive design, and performance optimization",
+                "b": true
+              },
+              {
+                "t": " to ensure fast load times and scalable frontend architecture."
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Personal Loan Prediction (ANN)",
+          "meta": null,
+          "metaHref": null,
+          "subtitle": null,
+          "meta2": null,
+          "bullets": [
+            [
+              {
+                "t": "Built a "
+              },
+              {
+                "t": "deep learning classification model",
+                "b": true
+              },
+              {
+                "t": " achieving 91.3% accuracy using TensorFlow/Keras with an optimized multi-layer architecture."
+              }
+            ],
+            [
+              {
+                "t": "Applied "
+              },
+              {
+                "t": "feature engineering and model optimization",
+                "b": true
+              },
+              {
+                "t": " to improve prediction accuracy and overall classification performance."
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Technical Skills",
+      "paragraphs": [],
+      "entries": [
+        {
+          "title": null,
+          "meta": null,
+          "metaHref": null,
+          "subtitle": null,
+          "meta2": null,
+          "bullets": [
+            [
+              {
+                "t": "Programming:",
+                "b": true
+              },
+              {
+                "t": " Python | Java | JavaScript"
+              }
+            ],
+            [
+              {
+                "t": "Databases:",
+                "b": true
+              },
+              {
+                "t": " MongoDB | SQL | MySQL | SQLite"
+              }
+            ],
+            [
+              {
+                "t": "Frameworks:",
+                "b": true
+              },
+              {
+                "t": " FastAPI | Node.js | Express | TensorFlow | Scikit-learn"
+              }
+            ],
+            [
+              {
+                "t": "Tools:",
+                "b": true
+              },
+              {
+                "t": " Git | GitHub | VS Code"
+              }
+            ],
+            [
+              {
+                "t": "ML & AI:",
+                "b": true
+              },
+              {
+                "t": " Machine Learning | Deep Learning | SHAP | Data Analysis"
+              }
+            ],
+            [
+              {
+                "t": "Web:",
+                "b": true
+              },
+              {
+                "t": " React | HTML | CSS | Bootstrap | SweetAlert.js"
+              }
+            ],
+            [
+              {
+                "t": "Core CS:",
+                "b": true
+              },
+              {
+                "t": " Data Structures & Algorithms | DBMS | Operating Systems | CN"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Certifications",
+      "paragraphs": [],
+      "entries": [
+        {
+          "title": "Microsoft Azure AI Fundamentals (AI-900)",
+          "meta": null,
+          "metaHref": null,
+          "subtitle": null,
+          "meta2": null,
+          "bullets": []
+        },
+        {
+          "title": "AI-ML Virtual Internship – AICTE EduSkills",
+          "meta": null,
+          "metaHref": null,
+          "subtitle": null,
+          "meta2": null,
+          "bullets": []
+        }
+      ]
+    }
+  ],
+  "ok": true
+}
