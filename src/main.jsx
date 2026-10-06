@@ -3,7 +3,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './styles/index.css'
 import App from './App.jsx'
-import { animateCursor } from './cursor.js'
+import { animateCursor, preloadCursors } from './cursor.js'
 
 const root = document.getElementById('root')
 const tree = (
@@ -23,3 +23,4 @@ if (document.readyState !== 'complete') {
   const stop = animateCursor('working')
   window.addEventListener('load', stop, { once: true })
 }
+preloadCursors()

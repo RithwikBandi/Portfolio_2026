@@ -32,11 +32,16 @@ const heroPreload =
   'imagesrcset="/img/portrait-hero-480.avif 480w, /img/portrait-hero-800.avif 800w, /img/portrait-hero-1100.avif 1100w" ' +
   'imagesizes="(min-width: 760px) 34vw, 66vw" />'
 
+// The three cursors seen first (arrow, link hand, text) load with the page, so the first hover is instant.
+const cursorPreloads = ['default', 'pointer', 'text']
+  .map((n) => `<link rel="preload" as="image" href="/cursors/${n}.png" imagesrcset="/cursors/${n}.png 1x, /cursors/${n}@2x.png 2x" />`)
+  .join('')
+
 const build = (url) => {
   const { html, head } = render(url)
   const extra = url === '/' ? heroPreload : ''
   // Function replacers: the HTML may contain "$" sequences.
-  return template.replace('<!--head-->', () => preloads + extra + head).replace('<!--app-->', () => html)
+  return template.replace('<!--head-->', () => preloads + cursorPreloads + extra + head).replace('<!--app-->', () => html)
 }
 
 for (const route of routes) {

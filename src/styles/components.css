@@ -174,5 +174,6 @@
 .form__msg { min-height: 1.5em; color: var(--ink-2); }
 .form__msg--error { color: var(--accent); }
 
-/* Animated cursors (src/cursor.js): busy while the form sends, working during load and page transitions */
-html.is-busy, html.is-busy *, html.is-working, html.is-working * { cursor: var(--anim-cursor, progress) !important; }
+/* Animated cursors (src/cursor.js). Working = one static frame; busy = a single overlay that blocks clicks while the form sends. */
+html.is-working, html.is-working * { cursor: var(--working-cursor, progress) !important; }
+.cursor-busy { position: fixed; inset: 0; z-index: 9999; }
