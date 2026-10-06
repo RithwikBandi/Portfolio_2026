@@ -1,0 +1,108 @@
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+  background: var(--bg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100svh;
+}
+
+img, picture, svg { display: block; max-width: 100%; }
+img { height: auto; }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; padding: 0; }
+p { text-wrap: pretty; }
+
+/* Display type: heavy, uppercase, tight, like a film title. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+::selection { background: var(--accent); color: var(--on-accent); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip {
+  position: fixed; left: 12px; top: -64px; z-index: 100;
+  padding: 10px 16px; background: var(--accent); color: var(--on-accent);
+  font-family: var(--font-mono); font-size: var(--fs-mono);
+  transition: top 0.2s var(--ease);
+}
+.skip:focus { top: 12px; }
+
+/* Safety net: nothing may cause sideways scroll. `clip` keeps sticky working. */
+.page { overflow-x: clip; }
+
+.container { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+
+.mono { font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: 0.02em; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent);
+}
+.eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); }
+
+/* Hazard tape divider */
+.tape { height: 10px; background: repeating-linear-gradient(-45deg, var(--accent) 0 14px, #050505 14px 28px); }
+
+/* ─── Scroll reveal ─────────────────────────────────────────────────────────
+   Native: compositor-driven, zero JS (Chromium, Safari 26+).
+   Fallback: one shared IntersectionObserver toggles .is-in (Firefox).        */
+@keyframes reveal { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 32%;
+    }
+  }
+}
+.reveal-js [data-reveal] {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transition-delay: var(--d, 0s);
+}
+.reveal-js [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* ─── Reduced motion: everything resolves instantly ──────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

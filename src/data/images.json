@@ -1,0 +1,99 @@
+{
+  "portrait-bust": {
+    "ratio": 1.8183,
+    "widths": [
+      420,
+      700
+    ]
+  },
+  "vietnam-boat": {
+    "ratio": 0.5626,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "vietnam-lanterns": {
+    "ratio": 0.75,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "vietnam-garden": {
+    "ratio": 0.75,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "vietnam-welcome": {
+    "ratio": 0.75,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "shot-sru": {
+    "ratio": 0.4199,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "shot-jobspace": {
+    "ratio": 0.625,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "shot-cardioml": {
+    "ratio": 0.5781,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "shot-folio": {
+    "ratio": 0.625,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "shot-marvel": {
+    "ratio": 0.5777,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "badge-aws": {
+    "ratio": 1,
+    "widths": [
+      160
+    ]
+  },
+  "badge-azure": {
+    "ratio": 1,
+    "widths": [
+      160
+    ]
+  },
+  "badge-aicte": {
+    "ratio": 1,
+    "widths": [
+      160
+    ]
+  }
+}

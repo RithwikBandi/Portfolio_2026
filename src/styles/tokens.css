@@ -1,0 +1,67 @@
+/* ─── Fonts: self-hosted, latin subset ─────────────────────────────────────── */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  size-adjust: 84%; /* heavy display face, scaled so layout sizes stay compact */
+  src: url('../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2') format('woff2-variations');
+}
+
+/* ─── Design tokens: The Batman (2022). Blood red, soot black, grit. ───────── */
+:root {
+  color-scheme: dark;
+
+  --font-display: 'Archivo', 'Arial Black', 'Helvetica Neue', sans-serif;
+  --font-body: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Soot-black surfaces with a trace of red */
+  --bg: #0a0506;
+  --bg-2: #120a0b;
+  --bg-3: #1b0f10;
+  --bg-4: #261415;
+  --ink: #f4ece8;
+  --ink-2: #bcaca7;
+  --ink-3: #8f7f7a;
+  --line: rgba(244, 236, 232, 0.1);
+  --line-2: rgba(244, 236, 232, 0.22);
+
+  --red: #c9291f;               /* the poster red: hero background */
+  --accent: #ff5a4f;            /* red for text, rules and states on dark */
+  --accent-soft: rgba(255, 90, 79, 0.14);
+  --on-accent: #0a0506;
+
+  --cut: 14px; /* chamfered-corner size for buttons */
+
+  --gutter: clamp(16px, 4.5vw, 56px);
+  --max: 1400px;
+  --section-y: clamp(80px, 12vw, 176px);
+  --nav-h: 64px;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --fs-mono: clamp(0.72rem, 0.69rem + 0.12vw, 0.8rem);
+  --fs-sm: 0.9rem;
+  --fs-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --fs-lead: clamp(1.2rem, 1.05rem + 0.75vw, 1.75rem);
+  --fs-h3: clamp(1.9rem, 1.2rem + 2.2vw, 3.4rem);
+  --fs-h2: clamp(2.4rem, 1.2rem + 4.6vw, 5.8rem);
+  /* Width-driven on phones, height-aware on laptops so the hero always fits one screen */
+  --fs-hero: clamp(4rem, min(16.5vw, 26svh), 15rem);
+}

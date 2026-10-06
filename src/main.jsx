@@ -1,10 +1,18 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import { createRoot, hydrateRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import './styles/index.css'
 import App from './App.jsx'
 
-createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root')
+const tree = (
   <StrictMode>
-    <App />
-  </StrictMode>,
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
 )
+
+// Production HTML is prerendered, so hydrate; in dev the root is empty.
+if (root.firstElementChild) hydrateRoot(root, tree)
+else createRoot(root).render(tree)

@@ -1,0 +1,19 @@
+# Rithwik Bandi
+
+> Web developer and growth expert. Builds full-stack web products (React, TypeScript, Node.js, FastAPI) and takes them to market with positioning, marketing and sales. B.Tech in Computer Science at SR University (2023 to 2027), based in Warangal, India.
+
+## Work
+
+- [SRU Timetable](https://rithwikbandi.tech/work/sru-timetable): a React and FastAPI web app that turns a university timetable into a readable weekly grid with free-time analysis, batch comparison and exports.
+- [JobSpace](https://rithwikbandi.tech/work/jobspace): a MERN job-search workspace with a dynamic spreadsheet table, document vault, analytics and role-based access.
+- [CardioML](https://rithwikbandi.tech/work/cardioml): an educational cardiovascular risk prediction app with a scikit-learn model and SHAP explanations.
+
+## About
+
+- [Home](https://rithwikbandi.tech/): overview, skills, education, certifications and contact details.
+- [GitHub](https://github.com/RithwikBandi): public repositories.
+- [LinkedIn](https://www.linkedin.com/in/rithwik-bandi/): professional profile.
+
+## Contact
+
+- Email: info@rithwikbandi.tech
