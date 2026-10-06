@@ -5,6 +5,7 @@ import ScrollManager from './components/ScrollManager.jsx'
 import RouteMeta from './components/RouteMeta.jsx'
 import Home from './pages/Home.jsx'
 import CaseStudy from './pages/CaseStudy.jsx'
+import Resume from './pages/Resume.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/work/:slug" element={<CaseStudy />} />
+            <Route path="/resume" element={<Resume />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

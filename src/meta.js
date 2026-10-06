@@ -3,7 +3,7 @@ import { projects, getProject } from './data/projects.js'
 
 const OG_IMAGE = `${SITE_URL}/og.jpg`
 
-export const routes = ['/', ...projects.map((p) => `/work/${p.slug}`)]
+export const routes = ['/', '/resume', ...projects.map((p) => `/work/${p.slug}`)]
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
@@ -34,6 +34,16 @@ export function metaFor(pathname) {
       jsonLd: [
         { '@context': 'https://schema.org', '@graph': [person, { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: SITE_URL, name: site.name, publisher: { '@id': `${SITE_URL}/#person` } }] },
       ],
+    }
+  }
+
+  if (path === '/resume') {
+    return {
+      path,
+      title: `Resume — ${site.name}`,
+      description: `The resume of ${site.name}, web developer. View it here, download it, or open the original PDF.`,
+      image: OG_IMAGE,
+      jsonLd: [],
     }
   }
 

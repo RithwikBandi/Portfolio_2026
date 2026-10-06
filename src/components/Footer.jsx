@@ -1,4 +1,4 @@
-import { ExtLink } from './TLink.jsx'
+import { ExtLink, TLink } from './TLink.jsx'
 import BatMark from './BatMark.jsx'
 import { site } from '../data/site.js'
 
@@ -17,7 +17,7 @@ export default function Footer() {
             {site.links.map((l) => (
               <li key={l.label}><ExtLink href={l.href}>{l.label}</ExtLink></li>
             ))}
-            <li><a href={site.resume} target="_blank" rel="noopener noreferrer">Résumé<span className="sr-only"> (PDF, opens in a new tab)</span></a></li>
+            <li><TLink to="/resume">Résumé</TLink></li>
           </ul>
           <p className="mono footer__copy">© 2026 {site.name}</p>
         </div>

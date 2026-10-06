@@ -1,7 +1,7 @@
 import Picture from '../components/Picture.jsx'
 import Arrow from '../components/Arrow.jsx'
-import { ExtLink } from '../components/TLink.jsx'
-import { site, education, credentials } from '../data/site.js'
+import { ExtLink, TLink } from '../components/TLink.jsx'
+import { education, credentials } from '../data/site.js'
 
 // Education and certifications, kept because hirers scan for them.
 export default function Training() {
@@ -44,9 +44,7 @@ export default function Training() {
               ))}
             </ul>
             <p style={{ marginTop: 20 }}>
-              <a className="btn" href={site.resume} target="_blank" rel="noopener noreferrer">
-                Download résumé <Arrow dir="down" /><span className="sr-only"> (PDF, opens in a new tab)</span>
-              </a>
+              <TLink to="/resume" className="btn">View résumé <Arrow /></TLink>
             </p>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Arrow from '../components/Arrow.jsx'
+import { TLink } from '../components/TLink.jsx'
 import Picture from '../components/Picture.jsx'
 import useParallax from '../components/useParallax.js'
 import { site, pillars } from '../data/site.js'
@@ -78,6 +79,7 @@ export default function Hero() {
           <div className="hero__cta fade" style={{ '--d': '0.8s' }}>
             <a className="btn btn--primary" href="#work">See my work <Arrow dir="down" /></a>
             <a className="btn" href="#contact">Get in touch</a>
+            <TLink className="btn" to="/resume">Resume</TLink>
           </div>
         </div>
       </section>

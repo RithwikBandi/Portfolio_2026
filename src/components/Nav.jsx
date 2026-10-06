@@ -65,6 +65,7 @@ export default function Nav() {
               {l.label}
             </TLink>
           ))}
+          <TLink to="/resume" aria-current={pathname === '/resume' ? 'page' : undefined}>Resume</TLink>
         </nav>
 
         <div className="nav__actions">
@@ -89,6 +90,7 @@ export default function Nav() {
           {LINKS.map((l, i) => (
             <TLink key={l.id} to={`/#${l.id}`} style={{ '--i': i }}>{l.label}</TLink>
           ))}
+          <TLink to="/resume" style={{ '--i': LINKS.length }}>Resume</TLink>
         </nav>
         <p className="mono menu__foot">{site.email}</p>
       </div>
