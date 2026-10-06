@@ -32,7 +32,7 @@ export function TLink({ to, onClick, ...rest }) {
     const t = document.startViewTransition(() => {
       flushSync(() => navigate(to))
     })
-    t.finished.finally(stop)
+    t.finished.then(stop, stop)
   }
 
   return <Link to={to} onClick={handle} {...rest} />

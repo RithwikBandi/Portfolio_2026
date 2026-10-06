@@ -19,17 +19,33 @@ function paint() {
   }
 }
 
+// An animated cursor must never outlive its reason: every job has a hard time limit, and
+// back/forward navigation (trackpad swipe, browser buttons, bfcache restore) clears them all.
+const LIMIT = { working: 3000, busy: 20000 }
+
 export function animateCursor(kind) {
   if (typeof document === 'undefined') return () => {}
   const { frames, ms } = cursors[kind]
   const job = { kind, i: 0 }
-  job.timer = setInterval(() => { job.i = (job.i + 1) % frames.length; if (stack[stack.length - 1] === job) paint() }, Math.max(ms, 80))
-  stack.push(job)
-  paint()
-  return () => {
+  job.limit = setTimeout(() => stop(), LIMIT[kind])
+  const stop = () => {
+    clearTimeout(job.limit)
     clearInterval(job.timer)
     const at = stack.indexOf(job)
     if (at >= 0) stack.splice(at, 1)
     paint()
   }
+  job.stop = stop
+  job.timer = setInterval(() => { job.i = (job.i + 1) % frames.length; if (stack[stack.length - 1] === job) paint() }, Math.max(ms, 80))
+  stack.push(job)
+  paint()
+  return stop
+}
+
+if (typeof window !== 'undefined') {
+  const reset = () => { for (const j of [...stack]) if (j.kind === 'working') j.stop() }
+    paint() // also clears classes restored from the back/forward cache
+  window.addEventListener('popstate', reset)
+  window.addEventListener('pageshow', reset)
+  document.addEventListener('visibilitychange', reset)
 }
