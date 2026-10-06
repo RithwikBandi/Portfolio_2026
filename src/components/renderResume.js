@@ -3,7 +3,7 @@
 // demand, so it only ships to people who open /resume.
 export const RESUME_URL = '/assets/resume/Rithwik_Resume.pdf'
 
-export async function renderResume(host, { signal } = {}) {
+export async function renderResume(host, { signal, replace = false } = {}) {
   const [pdfjs, { default: workerSrc }] = await Promise.all([
     import('pdfjs-dist'),
     import('pdfjs-dist/build/pdf.worker.min.mjs?url'),
@@ -16,8 +16,10 @@ export async function renderResume(host, { signal } = {}) {
   const doc = await pdfjs.getDocument({ data: await res.arrayBuffer() }).promise
 
   const width = host.clientWidth
-  const dpr = Math.min(window.devicePixelRatio || 1, 2.5)
+  const dpr = Math.min(window.devicePixelRatio || 1, 2)
   const pages = []
+  // On re-render (resize) build off-screen and swap at the end, so there is never a blank frame.
+  const target = replace ? document.createDocumentFragment() : host
 
   for (let n = 1; n <= doc.numPages; n++) {
     if (signal?.aborted) return pages
@@ -37,13 +39,14 @@ export async function renderResume(host, { signal } = {}) {
     canvas.height = Math.floor(viewport.height * dpr)
     canvas.setAttribute('aria-hidden', 'true')
     sheet.append(canvas)
-    host.append(sheet)
 
     await page.render({
       canvasContext: canvas.getContext('2d'),
       viewport,
       transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : undefined,
     }).promise
+    if (signal?.aborted) return pages
+    target.append(sheet) // attached only once painted and still wanted: no blank or duplicate sheets
 
     // Selectable / searchable text, positioned over the canvas.
     const textLayer = document.createElement('div')
@@ -74,7 +77,9 @@ export async function renderResume(host, { signal } = {}) {
       })
       sheet.append(link)
     }
+    if (signal?.aborted) { sheet.remove(); return pages }
     pages.push(sheet)
   }
+  if (replace && !signal?.aborted) host.replaceChildren(target)
   return pages
 }

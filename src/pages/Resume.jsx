@@ -8,38 +8,51 @@ import { RESUME_URL, renderResume } from '../components/renderResume.js'
 export default function Resume() {
   const stage = useRef(null)
   const host = useRef(null)
+  const rigRef = useRef(null)
+  const glareRef = useRef(null)
   const [state, setState] = useState('loading') // loading | ready | error
 
+  // Render the PDF; re-render when the column width really changes so the sheet never blurs.
   useEffect(() => {
     const el = host.current
-    const ctl = new AbortController()
-    // Wait a frame so the canvas is sized to the real column width.
-    const id = requestAnimationFrame(() => {
-      renderResume(el, { signal: ctl.signal })
-        .then(() => !ctl.signal.aborted && setState('ready'))
-        .catch((err) => { if (ctl.signal.aborted) return; console.error('Resume render failed:', err); setState('error') })
-    })
-    return () => { ctl.abort(); cancelAnimationFrame(id); el.replaceChildren() }
+    let ctl, timer, width = 0
+    const draw = () => {
+      ctl?.abort()
+      ctl = new AbortController()
+      const mine = ctl
+      width = el.clientWidth
+      const first = !el.firstElementChild
+      if (first) setState('loading')
+      renderResume(el, { signal: mine.signal, replace: !first })
+        .then(() => !mine.signal.aborted && setState('ready'))
+        .catch((err) => { if (mine.signal.aborted) return; console.error('Resume render failed:', err); setState('error') })
+    }
+    const id = requestAnimationFrame(draw)
+    const onResize = () => {
+      clearTimeout(timer)
+      timer = setTimeout(() => { if (Math.abs(el.clientWidth - width) > 24) draw() }, 250)
+    }
+    window.addEventListener('resize', onResize)
+    return () => { ctl?.abort(); cancelAnimationFrame(id); clearTimeout(timer); window.removeEventListener('resize', onResize); el.replaceChildren() }
   }, [])
 
-  // Pointer tilt + moving light. Transform and CSS variables only; one rAF while moving.
+  // Pointer tilt. Writes transform directly on the rig (no CSS variables, no style recalculation
+  // of the subtree) and eases once, in JS. Sleeps when settled.
   useEffect(() => {
-    const root = stage.current
-    if (state !== 'ready' || !root) return
+    const root = stage.current, rig = rigRef.current, glare = glareRef.current
+    if (state !== 'ready' || !root || !rig) return
     if (!window.matchMedia('(pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let raf = 0, tx = 0, ty = 0, cx = 0, cy = 0
     const tick = () => {
-      cx += (tx - cx) * 0.1
-      cy += (ty - cy) * 0.1
-      root.style.setProperty('--rx', `${(-cy * 7).toFixed(2)}deg`)
-      root.style.setProperty('--ry', `${(cx * 9).toFixed(2)}deg`)
-      root.style.setProperty('--gx', `${((cx + 0.5) * 100).toFixed(1)}%`)
-      root.style.setProperty('--gy', `${((cy + 0.5) * 100).toFixed(1)}%`)
-      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.002 ? requestAnimationFrame(tick) : 0
+      cx += (tx - cx) * 0.12
+      cy += (ty - cy) * 0.12
+      rig.style.transform = `rotateX(${(-cy * 5).toFixed(2)}deg) rotateY(${(cx * 6).toFixed(2)}deg)`
+      glare.style.transform = `translate3d(${(cx * 80).toFixed(1)}%, ${(cy * 80).toFixed(1)}%, 0)`
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.003 ? requestAnimationFrame(tick) : 0
     }
     const go = () => { if (!raf) raf = requestAnimationFrame(tick) }
     const move = (e) => {
-      const r = root.getBoundingClientRect()
+      const r = rig.parentElement.getBoundingClientRect()
       tx = Math.max(-0.5, Math.min(0.5, (e.clientX - r.left) / r.width - 0.5))
       ty = Math.max(-0.5, Math.min(0.5, (e.clientY - r.top) / r.height - 0.5))
       go()
@@ -47,7 +60,7 @@ export default function Resume() {
     const leave = () => { tx = 0; ty = 0; go() }
     root.addEventListener('pointermove', move, { passive: true })
     root.addEventListener('pointerleave', leave)
-    return () => { cancelAnimationFrame(raf); root.removeEventListener('pointermove', move); root.removeEventListener('pointerleave', leave) }
+    return () => { cancelAnimationFrame(raf); rig.style.transform = ''; root.removeEventListener('pointermove', move); root.removeEventListener('pointerleave', leave) }
   }, [state])
 
   return (
@@ -66,11 +79,11 @@ export default function Resume() {
 
       <div className="resume__stage" ref={stage} data-state={state}>
         <div className="resume__light" aria-hidden="true" />
-        <div className="resume__rig">
+        <div className="resume__rig" ref={rigRef}>
           <div className="resume__plate resume__plate--2" aria-hidden="true" />
           <div className="resume__plate resume__plate--1" aria-hidden="true" />
           <div className="resume__sheets" ref={host} />
-          <div className="resume__glare" aria-hidden="true" />
+          <div className="resume__clip" aria-hidden="true"><div className="resume__glare" ref={glareRef} /></div>
         </div>
         {state === 'loading' && <p className="mono resume__status" role="status">Loading resume…</p>}
         {state === 'error' && (
