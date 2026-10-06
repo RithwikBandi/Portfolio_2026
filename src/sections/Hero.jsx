@@ -78,7 +78,6 @@ export default function Hero() {
           </p>
           <div className="hero__cta fade" style={{ '--d': '0.8s' }}>
             <a className="btn btn--primary" href="#work">See my work <Arrow dir="down" /></a>
-            <a className="btn" href="#contact">Get in touch</a>
             <TLink className="btn" to="/resume">Resume</TLink>
           </div>
         </div>
