@@ -1,5 +1,6 @@
 import { flushSync } from 'react-dom'
 import { Link, useNavigate } from 'react-router-dom'
+import { animateCursor } from '../cursor.js'
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -27,9 +28,11 @@ export function TLink({ to, onClick, ...rest }) {
     if (samePage || !document.startViewTransition || reducedMotion()) return
 
     e.preventDefault()
-    document.startViewTransition(() => {
+    const stop = animateCursor('working')
+    const t = document.startViewTransition(() => {
       flushSync(() => navigate(to))
     })
+    t.finished.finally(stop)
   }
 
   return <Link to={to} onClick={handle} {...rest} />

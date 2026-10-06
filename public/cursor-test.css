@@ -39,3 +39,7 @@ textarea { cursor: url('/cursors/write.png') 1 1, text;
 :is(a, button, [role='button'], summary, label):is(:disabled, [aria-disabled='true']), :is(a, button, [role='button']):is(:disabled, [aria-disabled='true']) * { cursor: url('/cursors/not-allowed.png') 16 15, not-allowed;
   cursor: -webkit-image-set(url('/cursors/not-allowed.png') 1x, url('/cursors/not-allowed@2x.png') 2x) 16 15, not-allowed;
   cursor: image-set(url('/cursors/not-allowed.png') 1x, url('/cursors/not-allowed@2x.png') 2x) 16 15, not-allowed; }
+html.anim, html.anim * { cursor: var(--anim-cursor, progress) !important; }
+body { background: #0b0b0b; color: #eee; font: 16px system-ui; padding: 24px; }
+.g { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.t { padding: 28px 12px; background: #1d1d1d; border: 1px solid #c9291f; color: #eee; text-align: center; font: inherit; }

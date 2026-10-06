@@ -4,23 +4,9 @@ import { ExtLink } from '../components/TLink.jsx'
 import { site } from '../data/site.js'
 import cursors from '../data/cursors.json'
 
-// While the form is sending, the pointer becomes the animated busy bat (frames come from the cursor pack).
+// While the form is sending, the pointer becomes the animated busy bat.
 function useBusyCursor(active) {
-  useEffect(() => {
-    if (!active) return
-    const { frames, ms } = cursors.busy
-    const root = document.documentElement
-    let i = 0
-    const apply = () => {
-      const [x, y] = frames[i]
-      root.style.setProperty('--busy-cursor', `-webkit-image-set(url('/cursors/busy-${i}.png') 1x, url('/cursors/busy-${i}@2x.png') 2x) ${x} ${y}, progress`)
-      i = (i + 1) % frames.length
-    }
-    root.classList.add('is-busy')
-    apply()
-    const id = setInterval(apply, Math.max(ms, 80))
-    return () => { clearInterval(id); root.classList.remove('is-busy'); root.style.removeProperty('--busy-cursor') }
-  }, [active])
+  useEffect(() => (active ? animateCursor('busy') : undefined), [active])
 }
 
 // Web3Forms access keys are public by design (they only authorise sending to my inbox).

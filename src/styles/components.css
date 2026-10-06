@@ -174,5 +174,5 @@
 .form__msg { min-height: 1.5em; color: var(--ink-2); }
 .form__msg--error { color: var(--accent); }
 
-/* Busy state: set by the contact form while it sends */
-html.is-busy, html.is-busy * { cursor: var(--busy-cursor, progress) !important; }
+/* Animated cursors (src/cursor.js): busy while the form sends, working during load and page transitions */
+html.is-busy, html.is-busy *, html.is-working, html.is-working * { cursor: var(--anim-cursor, progress) !important; }
