@@ -38,7 +38,7 @@ export default function Training() {
                     <span className="mono">{c.issuer}</span>
                     <h4>{c.title}</h4>
                     <p>{c.text}</p>
-                    <ExtLink href={c.href} className="ext">View certificate <Arrow dir="ne" /></ExtLink>
+                    <ExtLink href={c.href} className="ext cert__link">View certificate <Arrow dir="ne" /></ExtLink>
                   </div>
                 </li>
               ))}

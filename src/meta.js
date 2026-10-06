@@ -13,7 +13,7 @@ const person = {
   name: site.name,
   url: SITE_URL,
   jobTitle: 'Web Developer',
-  description: 'Web developer and growth expert who builds full-stack products and takes them to market with positioning, marketing and sales.',
+  description: 'Web developer who builds products end to end and also does the marketing and sales around them.',
   email: `mailto:${site.email}`,
   address: { '@type': 'PostalAddress', addressLocality: 'Warangal', addressRegion: 'Telangana', addressCountry: 'IN' },
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'SR University' },
@@ -29,7 +29,7 @@ export function metaFor(pathname) {
       path,
       title: `${site.name} — Web Developer & Growth Expert`,
       description:
-        'Rithwik Bandi is a web developer and growth expert: he builds web products, then takes them to market with positioning, marketing and sales. Selected work: JobSpace, CardioML, SRU Timetable and Folio.',
+        'Rithwik Bandi is a web developer who also does marketing and sales. He builds products end to end and takes them to market. Work includes JobSpace, CardioML, SRU Timetable and Folio.',
       image: OG_IMAGE,
       jsonLd: [
         { '@context': 'https://schema.org', '@graph': [person, { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: SITE_URL, name: site.name, publisher: { '@id': `${SITE_URL}/#person` } }] },

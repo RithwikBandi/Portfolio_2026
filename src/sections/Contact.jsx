@@ -87,7 +87,7 @@ export default function Contact() {
         <div className="contact__grid">
           <div className="contact__side" data-reveal>
             <p>
-              Open to roles and freelance projects: websites and products, plus the marketing and sales around them. Tell me what you are building and who it is for. I reply fast. You can also write to{' '}
+              I’m open to roles and freelance work: a product to build, or the marketing and sales around one. Tell me what you’re making and who it’s for. You can also write to{' '}
               <a className="ulink" href={`mailto:${site.emailAlt}`}>{site.emailAlt}</a>.
             </p>
             <ul className="contact__links">

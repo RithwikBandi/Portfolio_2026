@@ -73,8 +73,7 @@ export default function Hero() {
 
         <div className="container hero__bottom">
           <p className="hero__lead fade" style={{ '--d': '0.65s' }}>
-            I build products people use, then take them to market: <strong>positioning, marketing and sales</strong> that turn
-            attention into customers.
+            I build web products, then do the part most developers skip: <strong>positioning, marketing and selling them</strong>.
           </p>
           <div className="hero__cta fade" style={{ '--d': '0.8s' }}>
             <a className="btn btn--primary" href="#work">See my work <Arrow dir="down" /></a>

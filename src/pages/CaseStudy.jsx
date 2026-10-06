@@ -34,7 +34,7 @@ export default function CaseStudy() {
         <p className="case__tag">{p.tagline}</p>
 
         <dl className="case__meta">
-          <div><dt className="mono">Role</dt><dd>{p.role}</dd></div>
+          <div><dt className="mono">My part</dt><dd>{p.part}</dd></div>
           <div><dt className="mono">Year</dt><dd>{p.year}</dd></div>
           <div><dt className="mono">Status</dt><dd>{p.status}</dd></div>
         </dl>
@@ -94,7 +94,7 @@ export default function CaseStudy() {
 
         <Block label="Stack">
           <ul className="chips">
-            {p.stack.map((s) => <li key={s}>{s}</li>)}
+            {(p.fullStack || p.stack).map((s) => <li key={s}>{s}</li>)}
           </ul>
         </Block>
 

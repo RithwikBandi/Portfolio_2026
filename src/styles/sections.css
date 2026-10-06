@@ -96,7 +96,7 @@
 /* Phones: name on top, the card under it, the copy below */
 @media (max-width: 759px) {
   .hero { --fs-hero: min(20vw, 6.5rem); }
-  .hero__fig { position: relative; right: auto; bottom: auto; width: min(76vw, 340px); margin: clamp(34px, 9vw, 56px) auto clamp(34px, 9vw, 52px); }
+  .hero__fig { position: relative; right: auto; bottom: auto; width: min(76vw, 340px); margin: clamp(64px, 17vw, 84px) auto clamp(34px, 9vw, 52px); }
 }
 
 /* ─── Pillars: Build / Market / Sell ──────────────────────────────────────────── */
@@ -126,9 +126,7 @@
 .show__body h3 a:hover { background-size: 100% 3px; color: var(--accent); }
 .show__tag { font-size: var(--fs-lead); line-height: 1.2; letter-spacing: -0.01em; font-weight: 500; }
 .show__sum { margin-top: 16px; color: var(--ink-2); max-width: 52ch; }
-.show__meta { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; margin-top: 24px; font-size: var(--fs-sm); }
-.show__meta dt { color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.1em; padding-top: 2px; }
-.show__meta dd { color: var(--ink-2); }
+.show__stack { margin-top: 20px; color: var(--ink-3); }
 .show__links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 28px; }
 @media (min-width: 960px) {
   .show { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: center; gap: 24px; }
@@ -140,8 +138,10 @@
 
 .more { margin-top: clamp(64px, 10vw, 140px); }
 .more__grid { display: grid; gap: clamp(16px, 2.4vw, 28px); margin-top: 24px; }
-.mcard { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--bg-2); transition: border-color 0.3s; }
-.mcard:hover { border-color: var(--accent); }
+.mcard { position: relative; display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--bg-2); transition: border-color 0.3s; }
+.mcard--link:hover { border-color: var(--accent); }
+.mcard__primary::after { content: ''; position: absolute; inset: 0; } /* the whole card is the link */
+.mcard__links .ext:not(.mcard__primary) { position: relative; z-index: 1; }
 .mcard__shot { aspect-ratio: 16 / 9; overflow: hidden; display: grid; place-items: center; background: var(--bg-3); border-bottom: 1px solid var(--line); color: var(--accent); }
 .mcard__shot picture, .mcard__shot img { width: 100%; height: 100%; }
 .mcard__shot img { object-fit: cover; object-position: top; }
@@ -184,8 +184,6 @@
 .disc__proof { margin-top: 14px; color: var(--ink-3); }
 .disc__tools { display: flex; flex-wrap: wrap; align-content: start; gap: 8px; }
 .disc__tools li { padding: 8px 14px; border: 1px solid var(--line-2); font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: 0.02em; color: var(--ink); transition: border-color 0.2s, color 0.2s, background-color 0.2s; }
-.disc__row:hover .disc__tools li { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
-.disc__tools li:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 @media (min-width: 960px) {
   .disc__row { grid-template-columns: 64px minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px 40px; align-items: start; }
   .disc__tools { padding-top: 14px; }

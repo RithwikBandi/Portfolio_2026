@@ -13,16 +13,17 @@ export default function About() {
         <div className="about__grid">
           <div className="about__text">
             <p className="about__lead" data-reveal>
-              Most developers stop at deploy and most marketers cannot ship. I do both: I build web products end to end,
-              then handle the positioning, marketing and selling that decide whether anyone uses them.
+              I’m a developer who wants to sell. I build web products end to end, and I’m putting the same effort into the
+              other half: positioning them, marketing them and getting them in front of buyers.
             </p>
             <p data-reveal>
-              The best work starts with a real annoyance. SRU Timetable began as an Excel parser and grew into a full
-              product with tests, caching and a deploy pipeline, because reading a schedule should take seconds, not minutes.
+              SRU Timetable is the clearest example. My university publishes every timetable as one giant spreadsheet, so in
+              late 2025 I wrote a parser for it. In August I rebuilt it as a real app with live data, a free-time view, batch
+              comparison and an attendance calculator, and I wrote about the first version on Medium.
             </p>
             <p data-reveal>
-              Sales and marketing are where I am investing next: understanding a buyer, shaping an offer, writing the page
-              that earns the reply. Based in Warangal, India, working with teams anywhere. This site is the working example.
+              I’m based in Warangal, India, and open to roles and freelance work, remote included. If you need someone who can
+              ship the product and also explain why it matters, that’s the job I want.
             </p>
           </div>
         </div>

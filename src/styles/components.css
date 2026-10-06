@@ -152,13 +152,14 @@
 .chips li { padding: 6px 12px; border: 1px solid var(--line-2); font-family: var(--font-mono); font-size: var(--fs-mono); }
 
 /* ─── Certificates ──────────────────────────────────────────────────────────── */
-.cert { display: grid; grid-template-columns: 72px 1fr; gap: 16px; align-items: start; padding: 18px; border: 1px solid var(--line); background: var(--bg-2); transition: border-color 0.25s, background-color 0.25s; }
+.cert { position: relative; display: grid; grid-template-columns: 72px 1fr; gap: 16px; align-items: start; padding: 18px; border: 1px solid var(--line); background: var(--bg-2); transition: border-color 0.25s, background-color 0.25s; }
 .cert:hover { border-color: var(--accent); background: var(--bg-3); }
 .cert picture, .cert img { width: 72px; height: 72px; object-fit: contain; }
 .cert h4 { font-size: 1.1rem; letter-spacing: 0; margin-bottom: 2px; }
 .cert p { color: var(--ink-2); font-size: var(--fs-sm); line-height: 1.5; }
 .cert .mono { color: var(--accent); display: block; margin-bottom: 6px; }
 .cert .ext { margin-top: 10px; font-size: var(--fs-sm); }
+.cert__link::after { content: ''; position: absolute; inset: 0; } /* the whole card is the link */
 
 /* ─── Form ──────────────────────────────────────────────────────────────────── */
 .form { display: grid; gap: 28px; }

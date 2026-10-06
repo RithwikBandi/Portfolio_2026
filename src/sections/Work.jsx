@@ -40,8 +40,8 @@ export default function Work() {
       <div className="container">
         <header className="section-head" data-reveal>
           <p className="eyebrow">01 / Selected work</p>
-          <h2 id="work-title">Built to be used.</h2>
-          <p>Four products, each solving a real problem, each with the thinking behind it.</p>
+          <h2 id="work-title">Selected work</h2>
+          <p>Four projects. Open any of them for the story behind it.</p>
         </header>
 
         <ol className="showcase" ref={list}>
@@ -57,10 +57,7 @@ export default function Work() {
                 <p className="show__tag">{p.tagline}</p>
                 <p className="show__sum">{p.summary}</p>
 
-                <dl className="show__meta">
-                  <dt className="mono">Role</dt><dd>{p.role}</dd>
-                  <dt className="mono">Stack</dt><dd>{p.stack.slice(0, 6).join(' · ')}</dd>
-                </dl>
+                <p className="mono show__stack">{p.stack.join(" · ")}</p>
 
                 <div className="show__links">
                   <TLink to={`/work/${p.slug}`} className="btn btn--primary">Case study <Arrow /></TLink>
@@ -75,8 +72,10 @@ export default function Work() {
         <div className="more">
           <h3 className="eyebrow" data-reveal>Also built</h3>
           <ul className="more__grid">
-            {more.map((m) => (
-              <li key={m.title} className="mcard" data-reveal>
+            {more.map((m) => {
+              const primary = m.live ? 'live' : m.github ? 'github' : null
+              return (
+              <li key={m.title} className={`mcard${primary ? ' mcard--link' : ''}`} data-reveal>
                 <div className="mcard__shot">
                   {m.shot ? <Picture name={m.shot} alt="" sizes="(min-width: 760px) 44vw, 92vw" /> : <BatMark size={64} />}
                 </div>
@@ -88,13 +87,14 @@ export default function Work() {
                   <p className="mcard__text">{m.text}</p>
                   <p className="mono mcard__stack">{m.stack.join(' · ')}</p>
                   <div className="mcard__links">
-                    {m.live && <ExtLink href={m.live} className="ext">{m.liveLabel || 'Live'} <Arrow dir="ne" /></ExtLink>}
-                    {m.github && <ExtLink href={m.github} className="ext">Code <Arrow dir="ne" /></ExtLink>}
+                    {m.live && <ExtLink href={m.live} className={`ext${primary === 'live' ? ' mcard__primary' : ''}`}>{m.liveLabel || 'Live'} <Arrow dir="ne" /></ExtLink>}
+                    {m.github && <ExtLink href={m.github} className={`ext${primary === 'github' ? ' mcard__primary' : ''}`}>Code <Arrow dir="ne" /></ExtLink>}
                     {m.private && <span className="mono mcard__private">Private work</span>}
                   </div>
                 </div>
               </li>
-            ))}
+              )
+            })}
           </ul>
         </div>
       </div>
