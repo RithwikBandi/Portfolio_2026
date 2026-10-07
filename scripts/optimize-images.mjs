@@ -11,7 +11,7 @@ const OUT = 'public/img'
 // name -> { file, widths, crop? ({left, top, width, height} in source pixels) }
 const JOBS = {
   // Upper-body cut-out for the hero profile card (background removed once, offline), trimmed to the subject
-  'portrait-bust': { file: 'profile/cutout2.png', widths: [420, 700, 1000], trim: true },
+  'portrait-bust': { file: 'profile/cutout3.png', widths: [420, 700, 1000], trim: true },
   'vietnam-boat': { file: 'vietnam/photo-04.jpg', widths: [640, 1024, 1600] },
   'vietnam-lanterns': { file: 'vietnam/photo-05.jpg', widths: [640, 1024, 1600] },
   'vietnam-garden': { file: 'vietnam/photo-03.jpg', widths: [640, 1024, 1600] },
