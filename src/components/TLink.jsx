@@ -1,12 +1,12 @@
 import { flushSync } from 'react-dom'
 import { Link, useNavigate } from 'react-router-dom'
 import { animateCursor } from '../cursor.js'
+import { canAnimate, routeTransition } from '../transition.js'
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-// Internal link. Route changes use the View Transitions API when available
-// (shared project visuals morph between home and case study); everything else
-// falls back to a plain client-side navigation.
+// Internal link. Route changes run inside a page transition (see transition.js) when the
+// browser supports it; everything else falls back to a plain client-side navigation.
 export function TLink({ to, onClick, ...rest }) {
   const navigate = useNavigate()
 
@@ -25,14 +25,12 @@ export function TLink({ to, onClick, ...rest }) {
       }
       return
     }
-    if (samePage || !document.startViewTransition || reducedMotion()) return
+    if (samePage || !canAnimate()) return
 
     e.preventDefault()
     const stop = animateCursor('working')
-    const t = document.startViewTransition(() => {
-      flushSync(() => navigate(to))
-    })
-    t.finished.then(stop, stop)
+    routeTransition(window.location.pathname, url.pathname, () => flushSync(() => navigate(to)))
+    setTimeout(stop, 600)
   }
 
   return <Link to={to} onClick={handle} {...rest} />

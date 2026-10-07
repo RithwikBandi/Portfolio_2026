@@ -1,7 +1,7 @@
 // Browser-style frame that shows a project preview at its full, uncropped size.
-export default function Frame({ host, children, caption, tt = false, style }) {
+export default function Frame({ host, children, caption, tt = false, plate }) {
   return (
-    <figure className={`frame${tt ? ' frame--tt' : ''}`} style={style}>
+    <figure className={`frame${tt ? ' frame--tt' : ''}`} data-plate={plate}>
       <div className="frame__bar" aria-hidden="true">
         <span className="frame__dots"><i /><i /><i /></span>
         <span className="frame__url mono">{host || 'local build'}</span>

@@ -298,15 +298,28 @@
 .notfound h1 { font-size: var(--fs-h2); max-width: 12ch; }
 .notfound p:not(.eyebrow) { color: var(--ink-2); }
 
-/* ─── Route transitions: a red diagonal wipe reveals the next page ───────────── */
-::view-transition-group(*) { animation-duration: 0.55s; animation-timing-function: var(--ease); }
-::view-transition-old(root) { animation: none; }
-::view-transition-new(root) { animation: wipe 0.75s var(--ease-io) both; }
-@keyframes wipe {
-  from { clip-path: polygon(0 0, 0 0, -25% 100%, -25% 100%); }
-  to { clip-path: polygon(0 0, 125% 0, 100% 100%, -25% 100%); }
-}
-::view-transition-image-pair(root) { isolation: auto; }
+/* ─── Route transitions (driven by src/transition.js) ──────────────────────────
+   Only opacity and transform animate, so it all runs on the compositor. Going into a case study
+   the page drifts up and the clicked preview morphs into the header; coming back reverses it.
+   The nav is its own layer so it stays perfectly still while the page moves under it. */
+:root[data-route] .nav { view-transition-name: site-nav; }
+:root[data-route]::view-transition-group(site-nav) { animation: none; z-index: 2; }
+:root[data-route]::view-transition-old(site-nav) { display: none; }
+:root[data-route]::view-transition-new(site-nav) { animation: none; }
+
+:root[data-route]::view-transition-old(root) { animation: route-leave 0.32s cubic-bezier(0.4, 0, 1, 1) both; }
+:root[data-route]::view-transition-new(root) { animation: route-enter 0.46s cubic-bezier(0.2, 0.8, 0.2, 1) 0.06s both; }
+:root[data-route='in'] { --route-from: 28px; --route-to: -16px; }
+:root[data-route='out'] { --route-from: -28px; --route-to: 16px; }
+@keyframes route-leave { to { opacity: 0; transform: translateY(var(--route-to)); } }
+@keyframes route-enter { from { opacity: 0; transform: translateY(var(--route-from)); } }
+
+/* The preview: one smooth move from card to header (and back), with a quick cross-fade at the start. */
+:root[data-route]::view-transition-group(plate) { animation-duration: 0.52s; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); z-index: 1; }
+:root[data-route]::view-transition-old(plate) { animation: route-plate-out 0.2s linear both; }
+:root[data-route]::view-transition-new(plate) { animation: route-plate-in 0.2s linear both; }
+@keyframes route-plate-out { to { opacity: 0; } }
+@keyframes route-plate-in { from { opacity: 0; } }
 
 /* 3D tilt on project previews (JS sets --rx/--ry on pointer devices) */
 .show__plate { perspective: 1100px; }

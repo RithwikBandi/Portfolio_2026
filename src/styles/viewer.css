@@ -83,8 +83,6 @@
 @keyframes pv-drop { from { opacity: 0; translate: 0 -12px; } }
 @keyframes pv-rise { from { opacity: 0; translate: 0 14px; } }
 
-/* The project previews carry their own transition names for route changes: keep them out of photo transitions. */
-:root[data-vt='pv'] .frame { view-transition-name: none !important; }
 .pv { overscroll-behavior: contain; }
 
 /* The title and counter are text people may want to copy: I-beam, selectable. */

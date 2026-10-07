@@ -46,7 +46,7 @@ export default function Work() {
 
         <ol className="showcase" ref={list}>
           {projects.map((p, i) => (
-            <li key={p.slug} className="show" data-reveal>
+            <li key={p.slug} id={`work-${p.slug}`} className="show" data-reveal>
               <TLink to={`/work/${p.slug}`} className="show__plate" aria-hidden="true" tabIndex={-1}>
                 <Plate project={p} eager={i === 0} sizes="(min-width: 960px) 58vw, 92vw" />
               </TLink>

@@ -41,7 +41,7 @@ export default function Beyond() {
     morph(update, tile)
     // One history entry, so the back gesture / browser back / phone back button closes the viewer
     // instead of leaving the page.
-    history.pushState({ pv: 1 }, '')
+    history.pushState({ ...history.state, pv: 1 }, '') // keeps the router's key, so scroll memory stays on this entry
     pushed.current = true
   }, [band])
 

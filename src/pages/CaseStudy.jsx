@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Plate from '../components/Plate.jsx'
 import Flow from '../components/Flow.jsx'
 import Frame from '../components/Frame.jsx'
@@ -7,6 +7,7 @@ import Arrow from '../components/Arrow.jsx'
 import { TLink, ExtLink } from '../components/TLink.jsx'
 import NotFound from './NotFound.jsx'
 import { projects, getProject } from '../data/projects.js'
+import { cameFromHome } from '../transition.js'
 
 function Block({ label, children }) {
   return (
@@ -19,6 +20,7 @@ function Block({ label, children }) {
 
 export default function CaseStudy() {
   const { slug } = useParams()
+  const navigate = useNavigate()
   const p = getProject(slug)
   if (!p) return <NotFound />
 
@@ -28,7 +30,15 @@ export default function CaseStudy() {
   return (
     <article className="case">
       <header className="container case__head">
-        <TLink to="/#work" className="back mono"><Arrow dir="left" /> All work</TLink>
+        {/* Back to the exact spot on the home page this case study was opened from; on a direct
+            visit there is no such spot, so it lands on this project's card instead. */}
+        <TLink
+          to={`/#work-${p.slug}`}
+          className="back mono"
+          onClick={(e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && cameFromHome()) { e.preventDefault(); navigate(-1) } }}
+        >
+          <Arrow dir="left" /> All work
+        </TLink>
         <p className="eyebrow">{p.index} — Case study</p>
         <h1>{p.title}</h1>
         <p className="case__tag">{p.tagline}</p>
