@@ -2,7 +2,7 @@ import images from '../data/images.json'
 
 // Responsive AVIF/WebP with intrinsic width/height so layout never shifts.
 // Widths and ratios come from the manifest written by scripts/optimize-images.mjs.
-export default function Picture({ name, alt, sizes = '100vw', eager = false, className, style }) {
+export default function Picture({ name, alt, sizes = '100vw', eager = false, className, style, ...rest }) {
   const img = images[name]
   const { widths, ratio } = img
   const max = widths[widths.length - 1]
@@ -24,6 +24,7 @@ export default function Picture({ name, alt, sizes = '100vw', eager = false, cla
         fetchpriority={eager ? 'high' : undefined}
         className={className}
         style={style}
+        {...rest}
       />
     </picture>
   )

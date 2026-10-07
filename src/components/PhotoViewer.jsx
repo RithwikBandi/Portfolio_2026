@@ -114,6 +114,7 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
     <dialog
       ref={dialog}
       className="pv"
+      data-cursor="pointer"
       aria-label="Winter Immersion photos"
       onCancel={(e) => { e.preventDefault(); onRequestClose() }}
       onKeyDown={onKey}
@@ -131,16 +132,16 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
             </button>
           </header>
 
-          <div className="pv__stage" ref={stage} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
+          <div className="pv__stage" ref={stage} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} onDragStart={(e) => e.preventDefault()}>
             <button type="button" className="pv__nav pv__nav--prev" onClick={() => go(index - 1)} aria-label="Previous photo"><Arrow dir="left" size={18} /></button>
             <div className="pv__slide" key={index} data-dir={dir.current}>
               {/* The small version of the same photo is already cached from the tile: it shows instantly while the big one loads. */}
-              <Picture name={p.name} alt={p.alt} sizes="100vw" eager className="pv__img" style={{ backgroundImage: `url(/img/${p.name}-640.avif)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+              <Picture name={p.name} alt={p.alt} sizes="100vw" eager className="pv__img" data-cursor="default" draggable={false} style={{ backgroundImage: `url(/img/${p.name}-640.avif)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
             </div>
             <button type="button" className="pv__nav pv__nav--next" onClick={() => go(index + 1)} aria-label="Next photo"><Arrow size={18} /></button>
           </div>
 
-          <ul className="pv__rail" ref={rail} aria-label="All photos">
+          <ul className="pv__rail" data-cursor="default" ref={rail} aria-label="All photos">
             {photos.map((t, i) => (
               <li key={t.name}>
                 <button type="button" className="pv__thumb" aria-current={i === index ? 'true' : undefined} aria-label={`Photo ${i + 1}: ${t.caption}`} onClick={() => go(i)}>
