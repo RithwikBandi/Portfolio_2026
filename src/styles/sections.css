@@ -207,9 +207,19 @@
 .beyond__head p:last-child { color: var(--ink-2); }
 .strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(10px, 1.6vw, 20px); align-items: start; }
 .strip__item { margin: 0; }
-.strip__item img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--bg-2); filter: grayscale(0.2) contrast(1.05); transition: filter 0.4s; }
-.strip__item:hover img { filter: none; }
+.strip__btn { position: relative; display: block; width: 100%; padding: 0; overflow: hidden; background: var(--bg-2); border: 0; color: inherit; }
+.strip__btn img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; filter: grayscale(0.2) contrast(1.05); transition: filter 0.4s, scale 0.6s var(--ease); }
+.strip__btn:hover img, .strip__btn:focus-visible img { filter: none; scale: 1.04; }
+.strip__btn::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--line-2); pointer-events: none; transition: box-shadow 0.25s; }
+.strip__btn:hover::after, .strip__btn:focus-visible::after { box-shadow: inset 0 0 0 2px var(--accent); }
+/* "View" tag in the corner, like a evidence-photo label */
+.strip__view { position: absolute; left: 0; bottom: 0; padding: 6px 12px 6px 10px; background: var(--accent); color: var(--on-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%); translate: -101% 0; transition: translate 0.3s var(--ease); }
+.strip__btn:hover .strip__view, .strip__btn:focus-visible .strip__view { translate: 0 0; }
+@media (hover: none) { .strip__view { translate: 0 0; } }
+.strip__more { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(10, 5, 6, 0.62); color: #fff; font-family: var(--font-display); font-weight: 900; font-size: clamp(1.8rem, 5vw, 3rem); letter-spacing: -0.01em; transition: background 0.25s; }
+.strip__btn:hover .strip__more { background: rgba(201, 41, 31, 0.55); }
 .strip__item figcaption { margin-top: 10px; color: var(--ink-3); }
+.beyond__all { margin-top: clamp(24px, 4vw, 40px); }
 @media (min-width: 760px) {
   .strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .strip__item:nth-child(even) { margin-top: clamp(20px, 3vw, 48px); }

@@ -8,33 +8,80 @@
   "vietnam-boat": {
     "ratio": 0.5626,
     "widths": [
+      160,
       640,
       1024,
-      1600
+      1600,
+      2400
     ]
   },
   "vietnam-lanterns": {
     "ratio": 0.75,
     "widths": [
+      160,
       640,
       1024,
-      1600
+      1600,
+      2400
     ]
   },
   "vietnam-garden": {
     "ratio": 0.75,
     "widths": [
+      160,
       640,
       1024,
-      1600
+      1600,
+      2400
     ]
   },
   "vietnam-welcome": {
     "ratio": 0.75,
     "widths": [
+      160,
+      640,
+      1024,
+      1600,
+      2400
+    ]
+  },
+  "vietnam-banner": {
+    "ratio": 0.6663,
+    "widths": [
+      160,
       640,
       1024,
       1600
+    ]
+  },
+  "vietnam-cormis": {
+    "ratio": 0.7508,
+    "widths": [
+      160,
+      640,
+      1024,
+      1600,
+      2400
+    ]
+  },
+  "vietnam-session": {
+    "ratio": 0.7508,
+    "widths": [
+      160,
+      640,
+      1024,
+      1600,
+      2400
+    ]
+  },
+  "vietnam-group": {
+    "ratio": 0.7508,
+    "widths": [
+      160,
+      640,
+      1024,
+      1600,
+      2400
     ]
   },
   "shot-sru": {

@@ -12,10 +12,15 @@ const OUT = 'public/img'
 const JOBS = {
   // Upper-body cut-out for the hero profile card (background removed once, offline), trimmed to the subject
   'portrait-bust': { file: 'profile/cutout3.png', widths: [420, 700, 1000], trim: true },
-  'vietnam-boat': { file: 'vietnam/photo-04.jpg', widths: [640, 1024, 1600] },
-  'vietnam-lanterns': { file: 'vietnam/photo-05.jpg', widths: [640, 1024, 1600] },
-  'vietnam-garden': { file: 'vietnam/photo-03.jpg', widths: [640, 1024, 1600] },
-  'vietnam-welcome': { file: 'vietnam/photo-02.jpg', widths: [640, 1024, 1600] },
+  // Vietnam gallery: 160 = viewer thumbnails, 2400 = full-screen viewing on large / retina screens
+  'vietnam-boat': { file: 'vietnam/photo-04.jpg', widths: [160, 640, 1024, 1600, 2400] },
+  'vietnam-lanterns': { file: 'vietnam/photo-05.jpg', widths: [160, 640, 1024, 1600, 2400] },
+  'vietnam-garden': { file: 'vietnam/photo-03.jpg', widths: [160, 640, 1024, 1600, 2400] },
+  'vietnam-welcome': { file: 'vietnam/photo-02.jpg', widths: [160, 640, 1024, 1600, 2400] },
+  'vietnam-banner': { file: 'vietnam/photo-01.jpg', widths: [160, 640, 1024, 1600, 2400] },
+  'vietnam-cormis': { file: 'vietnam/photo-06.jpg', widths: [160, 640, 1024, 1600, 2400] },
+  'vietnam-session': { file: 'vietnam/photo-07.jpg', widths: [160, 640, 1024, 1600, 2400] },
+  'vietnam-group': { file: 'vietnam/photo-08.jpg', widths: [160, 640, 1024, 1600, 2400] },
   // Project previews: full frames, never cropped
   // Trimmed below the form only: the rest of that page is empty background
   'shot-sru': { file: 'shots/sru.png', widths: [640, 1024, 1600], crop: { left: 0, top: 0, width: 2048, height: 860 } },

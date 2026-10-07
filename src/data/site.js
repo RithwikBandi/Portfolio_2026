@@ -120,5 +120,11 @@ export const vietnam = {
     { name: 'vietnam-lanterns', caption: 'Hoi An, lantern making', alt: 'Students making traditional lanterns at a table under hanging lanterns' },
     { name: 'vietnam-garden', caption: 'Da Nang, Botanica Garden', alt: 'The group standing at the entrance of Botanica Garden in Da Nang' },
     { name: 'vietnam-welcome', caption: 'FPT University, welcome ceremony', alt: 'The group in front of the welcome ceremony screen at FPT University' },
+    // Only visible in the full-screen viewer. Captions describe what is in the frame.
+    { name: 'vietnam-banner', caption: 'FPT University, Winter Study Tour 2025', alt: 'The group holding the SR University and FPT University Winter Study Tour Program 2025 banner on a lawn' },
+    { name: 'vietnam-cormis', caption: 'Group photo at CORMIS', alt: 'The group posing together in front of a CORMIS sign' },
+    { name: 'vietnam-session', caption: 'Session in the meeting room', alt: 'The group in a meeting room with a speaker on the video screen behind them' },
+    { name: 'vietnam-group', caption: 'Group photo with gift bags', alt: 'The group posing together holding orange gift bags' },
   ],
+  band: 4, // how many photos the home page shows before opening the viewer
 }
