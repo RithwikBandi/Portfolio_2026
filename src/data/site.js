@@ -116,15 +116,15 @@ export const vietnam = {
   title: 'Winter Immersion, Vietnam',
   text: 'In winter 2025 I was one of eight SR University students sent to FPT University in Vietnam. Sessions on cybersecurity and sustainability, then a lantern workshop in Hoi An and a ride in a coconut-basket boat.',
   photos: [
-    { name: 'vietnam-boat', caption: 'Hoi An, coconut basket boats', alt: 'A group riding a colourful round coconut basket boat through a palm forest in Hoi An' },
+    { name: 'vietnam-session', caption: 'Session in the meeting room', alt: 'The group in a meeting room with a speaker on the video screen behind them' },
     { name: 'vietnam-lanterns', caption: 'Hoi An, lantern making', alt: 'Students making traditional lanterns at a table under hanging lanterns' },
+    { name: 'vietnam-cormis', caption: 'Group photo at CORMIS', alt: 'The group posing together in front of a CORMIS sign' },
+    { name: 'vietnam-group', caption: 'Group photo with gift bags', alt: 'The group posing together holding orange gift bags' },
+    // Only visible in the full-screen viewer. Captions describe what is in the frame.
+    { name: 'vietnam-boat', caption: 'Hoi An, coconut basket boats', alt: 'A group riding a colourful round coconut basket boat through a palm forest in Hoi An' },
     { name: 'vietnam-garden', caption: 'Da Nang, Botanica Garden', alt: 'The group standing at the entrance of Botanica Garden in Da Nang' },
     { name: 'vietnam-welcome', caption: 'FPT University, welcome ceremony', alt: 'The group in front of the welcome ceremony screen at FPT University' },
-    // Only visible in the full-screen viewer. Captions describe what is in the frame.
     { name: 'vietnam-banner', caption: 'FPT University, Winter Study Tour 2025', alt: 'The group holding the SR University and FPT University Winter Study Tour Program 2025 banner on a lawn' },
-    { name: 'vietnam-cormis', caption: 'Group photo at CORMIS', alt: 'The group posing together in front of a CORMIS sign' },
-    { name: 'vietnam-session', caption: 'Session in the meeting room', alt: 'The group in a meeting room with a speaker on the video screen behind them' },
-    { name: 'vietnam-group', caption: 'Group photo with gift bags', alt: 'The group posing together holding orange gift bags' },
   ],
   band: 4, // how many photos the home page shows before opening the viewer
 }

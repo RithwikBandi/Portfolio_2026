@@ -17,6 +17,7 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
   const rail = useRef(null)
   const drag = useRef(null)
   const swiped = useRef(false)
+  const pressedOutside = useRef(false)
   const dir = useRef(0)
   const open = index !== null
   const total = photos.length
@@ -82,7 +83,7 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
       if (Math.abs(d.dx) < 8 && Math.abs(dy) < 8) return
       if (Math.abs(dy) > Math.abs(d.dx)) { drag.current = null; return } // vertical = let the page be
       d.locked = true
-      stage.current.setPointerCapture?.(e.pointerId)
+      try { stage.current.setPointerCapture(e.pointerId) } catch { /* pointer already gone */ }
     }
     const slide = stage.current.querySelector('.pv__slide')
     if (slide) { slide.style.transition = 'none'; slide.style.translate = `${d.dx}px 0` }
@@ -99,13 +100,21 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
     else if (slide) { slide.style.transition = ''; slide.style.translate = '' }
   }
 
-  // Click / tap anywhere that is not the photo or a control closes the viewer. The photo's own
-  // rectangle is checked geometrically: its container spans the whole stage.
-  const clickAway = (e) => {
-    if (swiped.current) return
-    if (e.target.closest('button, .pv__rail')) return
+  // Click / tap anywhere that is not the photo, a control or the title text closes the viewer. The
+  // photo's own rectangle is checked geometrically: its container spans the whole stage.
+  const outside = (e) => {
+    if (e.target.closest('button, .pv__rail, .pv__count, .pv__cap')) return false
     const r = stage.current?.querySelector('.pv__img')?.getBoundingClientRect()
-    if (r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) return
+    return !(r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom)
+  }
+  // Both the press and the release must land outside, so selecting the title (press on the text,
+  // release beside it) or dragging out of the photo never closes it. Nor does any click that
+  // finishes a text selection.
+  const clickAway = (e) => {
+    const wasOutside = pressedOutside.current
+    pressedOutside.current = false
+    if (swiped.current || !wasOutside || !outside(e)) return
+    if (window.getSelection()?.toString()) return
     onRequestClose()
   }
 
@@ -118,14 +127,15 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
       aria-label="Winter Immersion photos"
       onCancel={(e) => { e.preventDefault(); onRequestClose() }}
       onKeyDown={onKey}
+      onPointerDown={(e) => { pressedOutside.current = e.button === 0 && outside(e) }}
       onClick={clickAway}
     >
       {p && (
         <div className="pv__in">
           <div className="pv__tape" aria-hidden="true" />
           <header className="pv__bar">
-            <p className="pv__count mono" aria-live="polite"><b>{pad(index + 1)}</b> / {pad(total)}</p>
-            <p className="pv__cap">{p.caption}</p>
+            <p className="pv__count mono" data-cursor="text" aria-live="polite"><b>{pad(index + 1)}</b> / {pad(total)}</p>
+            <p className="pv__cap" data-cursor="text">{p.caption}</p>
             <button type="button" className="pv__close" onClick={onRequestClose} aria-label="Close viewer">
               <span className="mono">Esc</span>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="square" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" /></svg>

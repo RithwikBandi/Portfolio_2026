@@ -86,3 +86,8 @@
 /* The project previews carry their own transition names for route changes: keep them out of photo transitions. */
 :root[data-vt='pv'] .frame { view-transition-name: none !important; }
 .pv { overscroll-behavior: contain; }
+
+/* The title and counter are text people may want to copy: I-beam, selectable. */
+.pv [data-cursor='text'] { user-select: text; -webkit-user-select: text;
+  cursor: url('/cursors/text.png') 15 15, text;
+  cursor: image-set(url('/cursors/text.png') 1x, url('/cursors/text@2x.png') 2x) 15 15, text; }
