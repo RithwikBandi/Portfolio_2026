@@ -138,7 +138,8 @@ const animated = {}
 for (const [key, file] of [['busy', 'BUSY.ani'], ['working', 'WIB ANIMATED.ani']]) {
   const ani = parseAni(await readFile(join(SRC, file)))
   const frames = []
-  for (let i = 0; i < ani.frames.length; i++) {
+  // "working" shows one static frame (see src/cursor.js), so only that frame is emitted
+  for (let i = 0; i < (key === 'working' ? 1 : ani.frames.length); i++) {
     const c = await decodeCur(ani.frames[i])
     await emit(`${key}-${i}`, c)
     frames.push([c.hx, c.hy])
@@ -171,11 +172,4 @@ textarea { ${rule('write', spots.write, 'text')} }
 `
 await writeFile('src/styles/cursors.css', css)
 await writeFile('src/data/cursors.json', JSON.stringify(animated, null, 2) + '\n')
-// Standalone test page assets (public/cursor-test.html): same rules, no app bundle needed.
-await writeFile('public/cursors/frames.json', JSON.stringify(animated))
-await writeFile('public/cursor-test.css', css + `html.anim, html.anim * { cursor: var(--anim-cursor, progress) !important; }
-body { background: #0b0b0b; color: #eee; font: 16px system-ui; padding: 24px; }
-.g { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
-.t { padding: 28px 12px; background: #1d1d1d; border: 1px solid #c9291f; color: #eee; text-align: center; font: inherit; }
-`)
 console.log('wrote src/styles/cursors.css and src/data/cursors.json')
