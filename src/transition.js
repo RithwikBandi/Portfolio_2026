@@ -56,11 +56,13 @@ export const jump = (y) => window.scrollTo({ top: y, left: 0, behavior: 'instant
 // ─── Transitions ───────────────────────────────────────────────────────────────
 const slugOf = (path) => path.match(/^\/work\/([^/]+)/)?.[1] ?? null
 
+// The on-screen preview for a project (the hidden, kept-alive home page has copies too).
 function visiblePlate(slug) {
-  const el = document.querySelector(`[data-plate="${slug}"]`)
-  if (!el) return null
-  const r = el.getBoundingClientRect()
-  return r.bottom > 0 && r.top < window.innerHeight && r.width > 0 ? el : null
+  for (const el of document.querySelectorAll(`[data-plate="${slug}"]`)) {
+    const r = el.getBoundingClientRect()
+    if (r.bottom > 0 && r.top < window.innerHeight && r.width > 0) return el
+  }
+  return null
 }
 
 // Runs `update` (which must render the new route synchronously) inside a view transition.

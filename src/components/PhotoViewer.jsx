@@ -17,7 +17,7 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
   const rail = useRef(null)
   const drag = useRef(null)
   const swiped = useRef(false)
-  const pressedOutside = useRef(false)
+  const press = useRef(null) // where a press outside the photo started, or null
   const dir = useRef(0)
   const open = index !== null
   const total = photos.length
@@ -107,14 +107,15 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
     const r = stage.current?.querySelector('.pv__img')?.getBoundingClientRect()
     return !(r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom)
   }
-  // Both the press and the release must land outside, so selecting the title (press on the text,
-  // release beside it) or dragging out of the photo never closes it. Nor does any click that
-  // finishes a text selection.
+  // Works like any desktop app: a plain click outside closes, even with the title selected (the
+  // selection is simply dropped). A drag never closes, so selecting text, wherever the press
+  // started or the release lands, keeps the viewer open.
   const clickAway = (e) => {
-    const wasOutside = pressedOutside.current
-    pressedOutside.current = false
-    if (swiped.current || !wasOutside || !outside(e)) return
-    if (window.getSelection()?.toString()) return
+    const start = press.current
+    press.current = null
+    if (swiped.current || !start || !outside(e)) return
+    if (Math.hypot(e.clientX - start.x, e.clientY - start.y) > 6) return
+    window.getSelection()?.removeAllRanges()
     onRequestClose()
   }
 
@@ -127,7 +128,7 @@ export default function PhotoViewer({ photos, index, onChange, onRequestClose })
       aria-label="Winter Immersion photos"
       onCancel={(e) => { e.preventDefault(); onRequestClose() }}
       onKeyDown={onKey}
-      onPointerDown={(e) => { pressedOutside.current = e.button === 0 && outside(e) }}
+      onPointerDown={(e) => { press.current = e.button === 0 && outside(e) ? { x: e.clientX, y: e.clientY } : null }}
       onClick={clickAway}
     >
       {p && (
