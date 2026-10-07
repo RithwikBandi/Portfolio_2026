@@ -1,32 +1,41 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import Arrow from './Arrow.jsx'
 import Picture from './Picture.jsx'
 
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 const pad = (n) => String(n).padStart(2, '0')
 const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-// Full-screen photo viewer on the native <dialog>: Esc, focus trap, inert page and focus return come
-// from the browser. Arrow keys, swipe (touch + pen + mouse drag), thumbnail rail and tap-outside to
-// close sit on top. Images are only requested once it opens.
-export default function PhotoViewer({ photos, index, onChange, onClose }) {
+// Full-screen photo viewer on the native <dialog>: focus trap, inert page and Esc come from the
+// browser. Clicking or tapping anywhere outside the photo and the controls closes it, like apple.com.
+// Arrow keys, swipe, a thumbnail rail and neighbour preloading sit on top. Opening and closing are
+// orchestrated by the parent (so the photo can morph from / back to its tile): this component only
+// asks to close via onRequestClose. Images are only requested once it opens.
+export default function PhotoViewer({ photos, index, onChange, onRequestClose }) {
   const dialog = useRef(null)
   const stage = useRef(null)
   const rail = useRef(null)
   const drag = useRef(null)
+  const swiped = useRef(false)
   const dir = useRef(0)
   const open = index !== null
   const total = photos.length
 
-  // Open / close the native dialog from state; Esc closes it natively and reports back.
-  useEffect(() => {
+  // Layout effect, so the dialog opens/closes in the same commit as the state change. That is what
+  // lets a view transition capture the right "after" frame.
+  useIsoLayoutEffect(() => {
     const d = dialog.current
     if (!d) return
     if (open && !d.open) {
+      dir.current = 0
+      d.removeAttribute('data-closing')
       d.showModal()
       document.documentElement.style.overflow = 'hidden'
     }
-    if (!open && d.open) d.close()
-    if (!open) document.documentElement.style.overflow = ''
+    if (!open && d.open) {
+      d.close()
+      document.documentElement.style.overflow = ''
+    }
   }, [open])
   useEffect(() => () => { document.documentElement.style.overflow = '' }, [])
 
@@ -82,33 +91,51 @@ export default function PhotoViewer({ photos, index, onChange, onClose }) {
     const d = drag.current
     drag.current = null
     if (!d || !d.locked) return
+    swiped.current = true // the click that follows a swipe must not count as "outside"
+    setTimeout(() => { swiped.current = false }, 80)
     const slide = stage.current.querySelector('.pv__slide')
     const fast = Math.abs(d.dx) / Math.max(performance.now() - d.t, 1) > 0.5
     if (Math.abs(d.dx) > 70 || (fast && Math.abs(d.dx) > 24)) go(d.dx < 0 ? index + 1 : index - 1)
     else if (slide) { slide.style.transition = ''; slide.style.translate = '' }
   }
-  // Tapping the dark area around the photo closes the viewer.
-  const tapOutside = (e) => { if (e.target === e.currentTarget && !drag.current?.locked) onClose() }
+
+  // Click / tap anywhere that is not the photo or a control closes the viewer. The photo's own
+  // rectangle is checked geometrically: its container spans the whole stage.
+  const clickAway = (e) => {
+    if (swiped.current) return
+    if (e.target.closest('button, .pv__rail')) return
+    const r = stage.current?.querySelector('.pv__img')?.getBoundingClientRect()
+    if (r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) return
+    onRequestClose()
+  }
 
   const p = open ? photos[index] : null
   return (
-    <dialog ref={dialog} className="pv" aria-label="Winter Immersion photos" onClose={onClose} onKeyDown={onKey}>
+    <dialog
+      ref={dialog}
+      className="pv"
+      aria-label="Winter Immersion photos"
+      onCancel={(e) => { e.preventDefault(); onRequestClose() }}
+      onKeyDown={onKey}
+      onClick={clickAway}
+    >
       {p && (
         <div className="pv__in">
           <div className="pv__tape" aria-hidden="true" />
           <header className="pv__bar">
             <p className="pv__count mono" aria-live="polite"><b>{pad(index + 1)}</b> / {pad(total)}</p>
             <p className="pv__cap">{p.caption}</p>
-            <button type="button" className="pv__close" onClick={onClose} aria-label="Close viewer">
+            <button type="button" className="pv__close" onClick={onRequestClose} aria-label="Close viewer">
               <span className="mono">Esc</span>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="square" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" /></svg>
             </button>
           </header>
 
-          <div className="pv__stage" ref={stage} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} onClick={tapOutside}>
+          <div className="pv__stage" ref={stage} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
             <button type="button" className="pv__nav pv__nav--prev" onClick={() => go(index - 1)} aria-label="Previous photo"><Arrow dir="left" size={18} /></button>
             <div className="pv__slide" key={index} data-dir={dir.current}>
-              <Picture name={p.name} alt={p.alt} sizes="100vw" eager className="pv__img" />
+              {/* The small version of the same photo is already cached from the tile: it shows instantly while the big one loads. */}
+              <Picture name={p.name} alt={p.alt} sizes="100vw" eager className="pv__img" style={{ backgroundImage: `url(/img/${p.name}-640.avif)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
             </div>
             <button type="button" className="pv__nav pv__nav--next" onClick={() => go(index + 1)} aria-label="Next photo"><Arrow size={18} /></button>
           </div>

@@ -2,6 +2,7 @@
 * { margin: 0; }
 
 html {
+  scrollbar-gutter: stable; /* the page never changes width when something locks scroll (the photo viewer) */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--nav-h) + 16px);
